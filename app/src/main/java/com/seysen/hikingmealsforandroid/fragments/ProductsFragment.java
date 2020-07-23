@@ -23,8 +23,7 @@ import com.seysen.hikingmealsforandroid.core.Product;
 import com.seysen.hikingmealsforandroid.helper.ProductAdapter;
 
 import java.util.ArrayList;
-
-
+import java.util.Objects;
 
 
 /**
@@ -38,14 +37,14 @@ public class ProductsFragment extends Fragment implements Datable {
     private ProductAdapter adapter;
     private static final int RESULT_OK = 0;
     private static final int RESULT_CANCELED = 1;
-    public static final int REQUEST_CREATE_TYPE=1;
-    public static final int REQUEST_EDIT_TYPE=2;
+    public static final int REQUEST_CREATE_TYPE = 1;
+    public static final int REQUEST_EDIT_TYPE = 2;
     public static final String PRODUCTNAME = "product";
     public static final String CARBOHYDRATE = "carbohydrate";
     public static final String ENERGY = "energy";
     public static final String PROTEIN = "protein";
     public static final String FAT = "fat";
-    private static ArrayList<Product> mProducts = new ArrayList<Product>();
+    private static ArrayList<Product> mProducts = new ArrayList<>();
 
     public ProductsFragment() {
         // Required empty public constructor
@@ -61,7 +60,7 @@ public class ProductsFragment extends Fragment implements Datable {
         productList = view.findViewById(R.id.products);
         productList.setLayoutManager(new LinearLayoutManager(productList.getContext()));
         initProducts();
-        adapter = new ProductAdapter(getActivity(),mProducts);
+        adapter = new ProductAdapter(Objects.requireNonNull(getActivity()),mProducts);
         productList.setAdapter(adapter);
 
         adapter.setOnItemClickListener(new ProductAdapter.ClickListener() {
@@ -85,6 +84,7 @@ public class ProductsFragment extends Fragment implements Datable {
                 args.putString("name", productName);
                 args.putInt("position", position);
                 dialog.setArguments(args);
+                assert getFragmentManager() != null;
                 dialog.show(getFragmentManager(),"custom");
             }
         });
@@ -92,16 +92,15 @@ public class ProductsFragment extends Fragment implements Datable {
         return view;
     }
 
-    @SuppressLint("RestrictedApi")
     @Override
-    public void onActivityResult (int requestCode, int resultCode, Intent data) {
-        //super.onActivityResult(requestCode,resultCode,data);
+    public void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
         Log.d(TAG,"OnActivityResult");
         if(requestCode==REQUEST_CREATE_TYPE){
             Log.d(TAG, "Request create");
             if(resultCode==0){
                 Log.d(TAG, "Result OK");
-                Product mProduct = (Product) data.getParcelableExtra(PRODUCTNAME);
+                Product mProduct = data.getParcelableExtra(PRODUCTNAME);
                 mProducts.add(mProduct);
             }
             else{
@@ -112,9 +111,9 @@ public class ProductsFragment extends Fragment implements Datable {
             Log.d(TAG, "Request edit");
             if(resultCode==RESULT_OK){
                 Log.d(TAG, "Result OK");
-                //int position = data.getIntExtra(ID_KEY,0);
-                Product mProduct = (Product) data.getParcelableExtra(PRODUCTNAME);
-                mProducts.add(mProduct);
+                int position = data.getIntExtra(ID_KEY,0);
+                Product mProduct = data.getParcelableExtra(PRODUCTNAME);
+                mProducts.add(position,mProduct);
             }
             else{
                 Log.d(TAG, "Edit canceled");

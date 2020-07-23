@@ -39,9 +39,11 @@ public class ProductDetailActivity extends AppCompatActivity {
 
         Bundle arguments = getIntent().getExtras();
         if (arguments!=null) {
+
             position = arguments.getInt(ProductsFragment.ID_KEY);
             Log.d(TAG,String.valueOf(position));
-            product = (Product) getIntent().getParcelableExtra(ProductsFragment.PRODUCTNAME);
+            product = getIntent().getParcelableExtra(ProductsFragment.PRODUCTNAME);
+            assert product != null;
             productName.setText(product.getProductName());
             productEnergy.setText(String.format("%.1f", + product.getEnergy()).replace(",", "."));
             productProtein.setText(String.format("%.1f", + product.getProtein()).replace(",", "."));
@@ -59,9 +61,10 @@ public class ProductDetailActivity extends AppCompatActivity {
         double mProductCarbohydrate = Double.parseDouble(productCarbohydrate.getText().toString());
         Product mProduct = new Product(mProductName,mProductEnergy,mProductProtein,mProductFat,mProductCarbohydrate);
         Intent data = new Intent();
-        //data.putExtra(ProductsFragment.ID_KEY,position);
+        data.putExtra(ProductsFragment.ID_KEY,position);
         data.putExtra(ProductsFragment.PRODUCTNAME,mProduct);
         setResult(RESULT_OK,data);
+        Log.d(TAG, "Set result OK " + RESULT_OK);
         finish();
     }
 
