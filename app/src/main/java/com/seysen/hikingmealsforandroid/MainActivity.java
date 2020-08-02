@@ -2,6 +2,7 @@ package com.seysen.hikingmealsforandroid;
 
 import android.annotation.SuppressLint;
 import android.content.Intent;
+import android.support.annotation.NonNull;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.TabLayout;
 import android.support.v4.app.Fragment;
@@ -11,8 +12,11 @@ import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
+import android.util.SparseArray;
 import android.view.View;
+import android.view.ViewGroup;
 
+import com.seysen.hikingmealsforandroid.core.Product;
 import com.seysen.hikingmealsforandroid.fragments.HikesFragment;
 import com.seysen.hikingmealsforandroid.fragments.MealsFragment;
 import com.seysen.hikingmealsforandroid.fragments.ProductsFragment;
@@ -20,11 +24,19 @@ import com.seysen.hikingmealsforandroid.fragments.ProductsFragment;
 import java.util.ArrayList;
 import java.util.List;
 
+import static com.seysen.hikingmealsforandroid.fragments.ProductsFragment.PRODUCTNAME;
+import static com.seysen.hikingmealsforandroid.fragments.ProductsFragment.REQUEST_CREATE_TYPE;
+
 //import static com.seysen.hikingmealsforandroid.fragments.ProductsFragment.REQUEST_CREATE_TYPE;
 
 public class MainActivity extends AppCompatActivity {
 
     private static final String TAG = "main_activity";
+    private Adapter adapter = null;
+    private ViewPager viewPager = null;
+    private TabLayout tabLayout = null;
+    private Fragment activeFragment = null;
+
     //static final int REQUEST_CREATE_TYPE=1;
     //static final int REQUEST_EDIT_TYPE=2;
 
@@ -33,12 +45,13 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        final ViewPager viewPager = findViewById(R.id.viewpager);
+        viewPager = findViewById(R.id.viewpager);
         if (viewPager != null) {
             setupViewPager(viewPager);
         }
 
-        final TabLayout tabLayout = findViewById(R.id.tabs);
+
+        tabLayout = findViewById(R.id.tabs);
         tabLayout.setupWithViewPager(viewPager);
 
         final FloatingActionButton fab = findViewById(R.id.fab);
@@ -46,21 +59,24 @@ public class MainActivity extends AppCompatActivity {
         viewPager.addOnPageChangeListener(new ViewPager.OnPageChangeListener() {
             @Override
             public void onPageScrolled(int i, float v, int i1) {
-
+                //Log.d(TAG, "onPageScrolled");
             }
 
             @Override
             public void onPageSelected(int i) {
+                activeFragment = adapter.getRegisteredFragment(i);
+
                 switch (i) {
                     case 0: {
                         Log.d(TAG, "onPageSelected1");
+
                         fab.hide();
                         break;
                     }
                     case 1: {
                         Log.d(TAG, "onPageSelected2");
                         fab.hide();
-                        fab.setOnClickListener(new View.OnClickListener() {
+                        /*fab.setOnClickListener(new View.OnClickListener() {
                             @Override
                             public void onClick(View v) {
                                 Log.d(TAG, "onFloatingActionButtonClick");
@@ -83,7 +99,7 @@ public class MainActivity extends AppCompatActivity {
                                     startActivityForResult(intent, MealsFragment.REQUEST_CREATE_TYPE);
                                 }
                             }
-                        });
+                        });*/
                         fab.setImageResource(android.R.drawable.ic_menu_add);
                         fab.show();
                         break;
@@ -91,11 +107,12 @@ public class MainActivity extends AppCompatActivity {
                     case 2: {
                         Log.d(TAG, "onPageSelected3");
                         fab.hide();
-                        fab.setOnClickListener(new View.OnClickListener() {
+                        /*fab.setOnClickListener(new View.OnClickListener() {
                             @Override
                             public void onClick(View v) {
                                 Log.d(TAG, "onFloatingActionButtonClick");
                                 int position = tabLayout.getSelectedTabPosition();
+                                onProductAdd(position);
                                 Intent intent = null;
                                 switch (position) {
                                     case 0: {
@@ -105,7 +122,8 @@ public class MainActivity extends AppCompatActivity {
                                         break;
                                     }
                                     case 2: {
-                                        intent = new Intent (v.getContext(), ProductDetailActivity.class);
+
+
                                         break;
                                     }
                                 }
@@ -113,7 +131,7 @@ public class MainActivity extends AppCompatActivity {
                                     startActivityForResult(intent, ProductsFragment.REQUEST_CREATE_TYPE);
                                 }
                             }
-                        });
+                        });*/
                         fab.setImageResource(android.R.drawable.ic_menu_add);
                         fab.show();
                         break;
@@ -123,30 +141,72 @@ public class MainActivity extends AppCompatActivity {
 
             @Override
             public void onPageScrollStateChanged(int i) {
-
+                //Log.d(TAG, "onPageScrollStateChanged");
             }
         });
 
+        fab.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Log.d(TAG, "onFloatingActionButtonClick");
 
+                Log.d(TAG, "view" + v.getContext());
+                Intent intent = new Intent(v.getContext(), ProductDetailActivity.class);
+                startActivityForResult(intent, REQUEST_CREATE_TYPE);
+            }
+        });
     }
 
-    @SuppressLint("RestrictedApi")
+    /*@Override
+    public void onAttachFragment(Fragment fragment) {
+        super.onAttachFragment(fragment);
+        if (fragment instanceof ProductsFragment) {
+            ProductsFragment productsFragment = (ProductsFragment) fragment;
+            productsFragment.setOnProductAddListener(this);
+        }
+    }*/
+
+
     @Override
     public void onActivityResult (int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode,resultCode,data);
+        Log.d(TAG, "onActivityResult");
+        switch (tabLayout.getSelectedTabPosition()) {
+            case 0: {}
+            case 1: {}
+            case 2: {
+                if (requestCode == REQUEST_CREATE_TYPE) {
+                    Log.d(TAG, "Request create");
+                    if (resultCode == 0) {
+                        Log.d(TAG, "Result OK");
+                        Product mProduct = data.getParcelableExtra(PRODUCTNAME);
+                        ProductsFragment productFragment = (ProductsFragment) getSupportFragmentManager().findFragmentById(R.id.fragment_products);
+                        assert productFragment != null;
+                        ProductsFragment.addProduct(mProduct);
+                    } else {
+                        Log.d(TAG, "Create canceled");
+                    }
+                }
+            }
+        }
     }
 
     private void setupViewPager(ViewPager viewPager) {
-        Adapter adapter = new Adapter(getSupportFragmentManager());
+        adapter = new Adapter(getSupportFragmentManager());
         adapter.addFragment(new HikesFragment(), "Hikes");
         adapter.addFragment(new MealsFragment(), "Meals");
         adapter.addFragment(new ProductsFragment(), "Products");
         viewPager.setAdapter(adapter);
     }
 
+    public Fragment getActiveFragment() {
+        return activeFragment;
+    }
+
     static class Adapter extends FragmentPagerAdapter {
         private final List<Fragment> mFragments = new ArrayList<>();
         private final List<String> mFragmentTitles = new ArrayList<>();
+        SparseArray<Fragment> registeredFragments = new SparseArray<>();
 
         Adapter(FragmentManager fm) {
             super(fm);
@@ -155,6 +215,10 @@ public class MainActivity extends AppCompatActivity {
         void addFragment(Fragment fragment, String title) {
             mFragments.add(fragment);
             mFragmentTitles.add(title);
+        }
+
+        public Fragment getRegisteredFragment(int position) {
+            return registeredFragments.get(position);
         }
 
         @Override
@@ -170,6 +234,20 @@ public class MainActivity extends AppCompatActivity {
         @Override
         public CharSequence getPageTitle(int position) {
             return mFragmentTitles.get(position);
+        }
+
+        @NonNull
+        @Override
+        public Object instantiateItem(@NonNull ViewGroup container, int position) {
+            Fragment fragment = (Fragment) super.instantiateItem(container,position);
+            registeredFragments.put(position,fragment);
+            return fragment;
+        }
+
+        @Override
+        public void destroyItem(@NonNull ViewGroup container, int position, @NonNull Object object) {
+            registeredFragments.remove(position);
+            super.destroyItem(container, position, object);
         }
     }
 }

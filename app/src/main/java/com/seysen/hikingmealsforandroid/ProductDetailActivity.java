@@ -54,11 +54,12 @@ public class ProductDetailActivity extends AppCompatActivity {
 
     public void onOKClick (View view) {
         Log.d(TAG, "OK click");
+        //Add check on empty name
         String mProductName = productName.getText().toString();
-        double mProductEnergy = Double.parseDouble(productEnergy.getText().toString());
-        double mProductProtein = Double.parseDouble(productProtein.getText().toString());
-        double mProductFat = Double.parseDouble(productFat.getText().toString());
-        double mProductCarbohydrate = Double.parseDouble(productCarbohydrate.getText().toString());
+        double mProductEnergy = productEnergy.getText().toString().equals("")? 0.0: Double.parseDouble(productEnergy.getText().toString());
+        double mProductProtein = productProtein.getText().toString().equals("")? 0.0: Double.parseDouble(productProtein.getText().toString());
+        double mProductFat = productFat.getText().toString().equals("")? 0.0: Double.parseDouble(productFat.getText().toString());
+        double mProductCarbohydrate = productCarbohydrate.getText().toString().equals("")? 0.0: Double.parseDouble(productCarbohydrate.getText().toString());
         Product mProduct = new Product(mProductName,mProductEnergy,mProductProtein,mProductFat,mProductCarbohydrate);
         Intent data = new Intent();
         data.putExtra(ProductsFragment.ID_KEY,position);

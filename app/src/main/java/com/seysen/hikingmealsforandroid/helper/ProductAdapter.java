@@ -60,11 +60,11 @@ public class ProductAdapter extends RecyclerView.Adapter<ProductAdapter.ProductV
 
         public ProductViewHolder(@NonNull View view) {
             super(view);
-            nameView = (TextView)view.findViewById(R.id.productName);
-            energyView = (TextView)view.findViewById(R.id.product_energy);
-            proteinView = (TextView)view.findViewById(R.id.product_protein);
-            fatView = (TextView)view.findViewById(R.id.product_fat);
-            carbohydrateView = (TextView)view.findViewById(R.id.product_carbohydrate);
+            nameView = view.findViewById(R.id.productName);
+            energyView = view.findViewById(R.id.product_energy);
+            proteinView = view.findViewById(R.id.product_protein);
+            fatView = view.findViewById(R.id.product_fat);
+            carbohydrateView = view.findViewById(R.id.product_carbohydrate);
             view.setOnClickListener(this);
             view.setOnLongClickListener(this);
         }
@@ -84,6 +84,8 @@ public class ProductAdapter extends RecyclerView.Adapter<ProductAdapter.ProductV
     public void setOnItemClickListener(ClickListener clickListener) {
         ProductAdapter.clickListener = clickListener;
     }
+
+
 
     public interface ClickListener {
         void onItemClick(int position, View v);

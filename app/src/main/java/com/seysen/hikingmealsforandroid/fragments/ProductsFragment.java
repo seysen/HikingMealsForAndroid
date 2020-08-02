@@ -9,11 +9,9 @@ import android.support.v4.app.Fragment;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
-import android.util.TypedValue;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.TextView;
 
 import com.seysen.hikingmealsforandroid.helper.CustomDialogFragment;
 import com.seysen.hikingmealsforandroid.helper.Datable;
@@ -34,7 +32,7 @@ public class ProductsFragment extends Fragment implements Datable {
     public static final String ID_KEY = "product_id";
     private static final String TAG = "products_fragment";
     private RecyclerView productList;
-    private ProductAdapter adapter;
+    private static ProductAdapter adapter;
     private static final int RESULT_OK = 0;
     private static final int RESULT_CANCELED = 1;
     public static final int REQUEST_CREATE_TYPE = 1;
@@ -48,6 +46,12 @@ public class ProductsFragment extends Fragment implements Datable {
 
     public ProductsFragment() {
         // Required empty public constructor
+    }
+
+    public static void addProduct(Product mProduct) {
+        mProducts.add(mProduct);
+        Log.d(TAG, "Notify data changed");
+        adapter.notifyDataSetChanged();
     }
 
 
@@ -67,6 +71,7 @@ public class ProductsFragment extends Fragment implements Datable {
             @Override
             public void onItemClick(int position, View v) {
                 Log.d(TAG, "onItemClick position: " + position);
+                Log.d(TAG, "View = " + v);
                 Intent intent = new Intent(v.getContext(), ProductDetailActivity.class);
                 intent.putExtra(ID_KEY, position);
                 intent.putExtra(PRODUCTNAME,mProducts.get(position));
@@ -78,7 +83,6 @@ public class ProductsFragment extends Fragment implements Datable {
                 Log.d(TAG, "onItemLongClick pos = " + position);
                 String productName = mProducts.get(position).getProductName();
                 CustomDialogFragment dialog = new CustomDialogFragment();
-
                 Bundle args = new Bundle();
                 args.putString("item","product");
                 args.putString("name", productName);
@@ -88,9 +92,9 @@ public class ProductsFragment extends Fragment implements Datable {
                 dialog.show(getFragmentManager(),"custom");
             }
         });
-
         return view;
     }
+
 
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
@@ -127,6 +131,7 @@ public class ProductsFragment extends Fragment implements Datable {
     }
 
     public void removeItem (int position) {
+        Log.d(TAG, "removeItem");
         mProducts.remove(position);
         adapter.notifyDataSetChanged();
     }
