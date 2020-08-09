@@ -48,13 +48,6 @@ public class ProductsFragment extends Fragment implements Datable {
         // Required empty public constructor
     }
 
-    public static void addProduct(Product mProduct) {
-        mProducts.add(mProduct);
-        Log.d(TAG, "Notify data changed");
-        adapter.notifyDataSetChanged();
-    }
-
-
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
@@ -75,6 +68,9 @@ public class ProductsFragment extends Fragment implements Datable {
                 Intent intent = new Intent(v.getContext(), ProductDetailActivity.class);
                 intent.putExtra(ID_KEY, position);
                 intent.putExtra(PRODUCTNAME,mProducts.get(position));
+                Log.d(TAG, String.valueOf(intent));
+                Log.d(TAG, String.valueOf(intent.getIntExtra(ID_KEY,0)));
+                Log.d(TAG, String.valueOf(intent.getExtras()));
                 startActivityForResult(intent, REQUEST_EDIT_TYPE);
             }
 
@@ -95,29 +91,17 @@ public class ProductsFragment extends Fragment implements Datable {
         return view;
     }
 
-
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
         Log.d(TAG,"OnActivityResult");
-        if(requestCode==REQUEST_CREATE_TYPE){
-            Log.d(TAG, "Request create");
-            if(resultCode==0){
-                Log.d(TAG, "Result OK");
-                Product mProduct = data.getParcelableExtra(PRODUCTNAME);
-                mProducts.add(mProduct);
-            }
-            else{
-                Log.d(TAG, "Create canceled");
-            }
-        }
-        else if (requestCode==REQUEST_EDIT_TYPE) {
+        if (requestCode==REQUEST_EDIT_TYPE) {
             Log.d(TAG, "Request edit");
             if(resultCode==RESULT_OK){
                 Log.d(TAG, "Result OK");
                 int position = data.getIntExtra(ID_KEY,0);
                 Product mProduct = data.getParcelableExtra(PRODUCTNAME);
-                mProducts.add(position,mProduct);
+                mProducts.set(position,mProduct);
             }
             else{
                 Log.d(TAG, "Edit canceled");
@@ -126,6 +110,12 @@ public class ProductsFragment extends Fragment implements Datable {
             Log.d(TAG, "Result super");
             super.onActivityResult(requestCode, resultCode, data);
         }
+        Log.d(TAG, "Notify data changed");
+        adapter.notifyDataSetChanged();
+    }
+
+    public static void addProduct(Product mProduct) {
+        mProducts.add(mProduct);
         Log.d(TAG, "Notify data changed");
         adapter.notifyDataSetChanged();
     }

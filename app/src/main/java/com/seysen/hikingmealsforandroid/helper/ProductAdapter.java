@@ -85,8 +85,6 @@ public class ProductAdapter extends RecyclerView.Adapter<ProductAdapter.ProductV
         ProductAdapter.clickListener = clickListener;
     }
 
-
-
     public interface ClickListener {
         void onItemClick(int position, View v);
         void onItemLongClick(int position, View v);

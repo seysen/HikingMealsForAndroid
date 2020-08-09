@@ -16,6 +16,8 @@ import android.util.SparseArray;
 import android.view.View;
 import android.view.ViewGroup;
 
+import com.seysen.hikingmealsforandroid.core.Meal;
+import com.seysen.hikingmealsforandroid.core.MealProduct;
 import com.seysen.hikingmealsforandroid.core.Product;
 import com.seysen.hikingmealsforandroid.fragments.HikesFragment;
 import com.seysen.hikingmealsforandroid.fragments.MealsFragment;
@@ -24,6 +26,7 @@ import com.seysen.hikingmealsforandroid.fragments.ProductsFragment;
 import java.util.ArrayList;
 import java.util.List;
 
+import static com.seysen.hikingmealsforandroid.fragments.MealsFragment.MEALNAME;
 import static com.seysen.hikingmealsforandroid.fragments.ProductsFragment.PRODUCTNAME;
 import static com.seysen.hikingmealsforandroid.fragments.ProductsFragment.REQUEST_CREATE_TYPE;
 
@@ -65,7 +68,6 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onPageSelected(int i) {
                 activeFragment = adapter.getRegisteredFragment(i);
-
                 switch (i) {
                     case 0: {
                         Log.d(TAG, "onPageSelected1");
@@ -151,7 +153,20 @@ public class MainActivity extends AppCompatActivity {
                 Log.d(TAG, "onFloatingActionButtonClick");
 
                 Log.d(TAG, "view" + v.getContext());
-                Intent intent = new Intent(v.getContext(), ProductDetailActivity.class);
+                Intent intent = null;
+                switch (tabLayout.getSelectedTabPosition()) {
+                    case 0: {
+                        break;
+                    }
+                    case 1: {
+                        intent = new Intent(v.getContext(), MealDetailActivity.class);
+                        break;
+                    }
+                    case 2: {
+                        intent = new Intent(v.getContext(), ProductDetailActivity.class);
+                        break;
+                    }
+                }
                 startActivityForResult(intent, REQUEST_CREATE_TYPE);
             }
         });
@@ -172,8 +187,24 @@ public class MainActivity extends AppCompatActivity {
         super.onActivityResult(requestCode,resultCode,data);
         Log.d(TAG, "onActivityResult");
         switch (tabLayout.getSelectedTabPosition()) {
-            case 0: {}
-            case 1: {}
+            case 0: {
+                break;
+            }
+            case 1: {
+                if (requestCode == REQUEST_CREATE_TYPE) {
+                    Log.d(TAG, "Request create");
+                    if (resultCode == 0) {
+                        Log.d(TAG, "Result OK");
+                        Meal mMeal = data.getParcelableExtra(MEALNAME);
+                        MealsFragment mealsFragment = (MealsFragment) getSupportFragmentManager().findFragmentById(R.id.fragment_meals);
+                        assert mealsFragment != null;
+                        MealsFragment.addMeal(mMeal);
+                    } else {
+                        Log.d(TAG, "Create canceled");
+                    }
+                    break;
+                }
+            }
             case 2: {
                 if (requestCode == REQUEST_CREATE_TYPE) {
                     Log.d(TAG, "Request create");
@@ -186,6 +217,7 @@ public class MainActivity extends AppCompatActivity {
                     } else {
                         Log.d(TAG, "Create canceled");
                     }
+                    break;
                 }
             }
         }

@@ -32,17 +32,24 @@ public class MealAdapter extends RecyclerView.Adapter<MealAdapter.MealViewHolder
 
     @Override
     public void onBindViewHolder(@NonNull MealViewHolder holder, int position) {
-        Meal product = meals.get(position);
-        holder.nameView.setText(product.getMealName());
-        holder.energyView.setText(String.format("%.1f", + product.getEnergy()).replace(",", "."));
-        holder.proteinView.setText(String.format("%.1f", + product.getProtein()).replace(",", "."));
-        holder.fatView.setText(String.format("%.1f", + product.getFat()).replace(",", "."));
-        holder.carbohydrateView.setText(String.format("%.1f", + product.getCarbohydrate()).replace(",", "."));
+        Meal meal = meals.get(position);
+        holder.nameView.setText(meal.getMealName());
+        holder.energyView.setText(String.format("%.1f", + meal.getEnergy()).replace(",", "."));
+        holder.proteinView.setText(String.format("%.1f", + meal.getProtein()).replace(",", "."));
+        holder.fatView.setText(String.format("%.1f", + meal.getFat()).replace(",", "."));
+        holder.carbohydrateView.setText(String.format("%.1f", + meal.getCarbohydrate()).replace(",", "."));
+        holder.weightView.setText(String.format("%.1f", + meal.getWeight()).replace(",", "."));
     }
 
     @Override
     public int getItemCount() {
         return meals.size();
+    }
+
+    public MealAdapter(Context context, ArrayList<Meal> items) {
+        context.getTheme().resolveAttribute(R.attr.selectableItemBackground, mTypedValue, true);
+        mBackground = mTypedValue.resourceId;
+        meals = items;
     }
 
     public static class MealViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener, View.OnLongClickListener {
@@ -52,14 +59,16 @@ public class MealAdapter extends RecyclerView.Adapter<MealAdapter.MealViewHolder
         private final TextView proteinView;
         private final TextView fatView;
         private final TextView carbohydrateView;
+        private final TextView weightView;
 
         public MealViewHolder(@NonNull View view) {
             super(view);
-            nameView = (TextView)view.findViewById(R.id.mealName);
-            energyView = (TextView)view.findViewById(R.id.meal_energy);
-            proteinView = (TextView)view.findViewById(R.id.meal_protein);
-            fatView = (TextView)view.findViewById(R.id.meal_fat);
-            carbohydrateView = (TextView)view.findViewById(R.id.meal_carbohydrate);
+            nameView = view.findViewById(R.id.mealName);
+            energyView = view.findViewById(R.id.meal_energy);
+            proteinView = view.findViewById(R.id.meal_protein);
+            fatView = view.findViewById(R.id.meal_fat);
+            carbohydrateView = view.findViewById(R.id.meal_carbohydrate);
+            weightView = view.findViewById(R.id.meal_weight);
             view.setOnClickListener(this);
             view.setOnLongClickListener(this);
         }

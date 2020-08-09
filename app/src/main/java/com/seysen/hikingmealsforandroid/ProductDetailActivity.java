@@ -10,6 +10,8 @@ import android.widget.EditText;
 import com.seysen.hikingmealsforandroid.core.Product;
 import com.seysen.hikingmealsforandroid.fragments.ProductsFragment;
 
+import static com.seysen.hikingmealsforandroid.fragments.ProductsFragment.*;
+
 
 public class ProductDetailActivity extends AppCompatActivity {
 
@@ -39,10 +41,11 @@ public class ProductDetailActivity extends AppCompatActivity {
 
         Bundle arguments = getIntent().getExtras();
         if (arguments!=null) {
-
-            position = arguments.getInt(ProductsFragment.ID_KEY);
-            Log.d(TAG,String.valueOf(position));
-            product = getIntent().getParcelableExtra(ProductsFragment.PRODUCTNAME);
+            Log.d(TAG,"Has arguments " + arguments);
+            position = arguments.getInt(ID_KEY);
+            Log.d(TAG,"Position = " + position);
+            product = getIntent().getParcelableExtra(PRODUCTNAME);
+            Log.d(TAG,"Product = " + product);
             assert product != null;
             productName.setText(product.getProductName());
             productEnergy.setText(String.format("%.1f", + product.getEnergy()).replace(",", "."));
@@ -54,7 +57,7 @@ public class ProductDetailActivity extends AppCompatActivity {
 
     public void onOKClick (View view) {
         Log.d(TAG, "OK click");
-        //Add check on empty name
+        //<TODO> Add check on empty name
         String mProductName = productName.getText().toString();
         double mProductEnergy = productEnergy.getText().toString().equals("")? 0.0: Double.parseDouble(productEnergy.getText().toString());
         double mProductProtein = productProtein.getText().toString().equals("")? 0.0: Double.parseDouble(productProtein.getText().toString());
@@ -62,8 +65,8 @@ public class ProductDetailActivity extends AppCompatActivity {
         double mProductCarbohydrate = productCarbohydrate.getText().toString().equals("")? 0.0: Double.parseDouble(productCarbohydrate.getText().toString());
         Product mProduct = new Product(mProductName,mProductEnergy,mProductProtein,mProductFat,mProductCarbohydrate);
         Intent data = new Intent();
-        data.putExtra(ProductsFragment.ID_KEY,position);
-        data.putExtra(ProductsFragment.PRODUCTNAME,mProduct);
+        data.putExtra(ID_KEY,position);
+        data.putExtra(PRODUCTNAME,mProduct);
         setResult(RESULT_OK,data);
         Log.d(TAG, "Set result OK " + RESULT_OK);
         finish();

@@ -19,7 +19,7 @@ public class MealProductAdapter extends RecyclerView.Adapter<MealProductAdapter.
     private int mBackground;
     private LayoutInflater inflater;
     private ArrayList<MealProduct> products;
-    private static MealProductAdapter.ClickListener clickListener;
+    private static ClickListener clickListener;
 
     @NonNull
     @Override
@@ -32,12 +32,12 @@ public class MealProductAdapter extends RecyclerView.Adapter<MealProductAdapter.
     @Override
     public void onBindViewHolder(@NonNull MealProductAdapter.MealProductViewHolder holder, int position) {
         MealProduct product = products.get(position);
-        holder.nameView.setText(product.getProductName());
-        /*holder.energyView.setText(String.format("%.1f", +product.getEnergy()).replace(",", "."));
-        holder.proteinView.setText(String.format("%.1f", +product.getProtein()).replace(",", "."));
-        holder.fatView.setText(String.format("%.1f", +product.getFat()).replace(",", "."));
-        holder.carbohydrateView.setText(String.format("%.1f", +product.getCarbohydrate()).replace(",", "."));*/
-        holder.weightView.setText(String.format("%.1f", + product.getWeight()).replace(",", "."));
+        holder.mealProductNameView.setText(product.getProductName());
+        holder.mealProductEnergyView.setText(String.format("%.1f", + product.getEnergy()).replace(",", "."));
+        holder.mealProductProteinView.setText(String.format("%.1f", + product.getProtein()).replace(",", "."));
+        holder.mealProductFatView.setText(String.format("%.1f", + product.getFat()).replace(",", "."));
+        holder.mealProductCarbohydrateView.setText(String.format("%.1f", + product.getCarbohydrate()).replace(",", "."));
+        holder.mealProductWeightView.setText(String.format("%.1f", + product.getWeight()).replace(",", "."));
     }
 
     @Override
@@ -53,21 +53,21 @@ public class MealProductAdapter extends RecyclerView.Adapter<MealProductAdapter.
 
     public static class MealProductViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener, View.OnLongClickListener {
 
-        private final TextView nameView;
-        /*private final TextView energyView;
-        private final TextView proteinView;
-        private final TextView fatView;
-        private final TextView carbohydrateView;*/
-        private final TextView weightView;
+        private final TextView mealProductNameView;
+        private final TextView mealProductEnergyView;
+        private final TextView mealProductProteinView;
+        private final TextView mealProductFatView;
+        private final TextView mealProductCarbohydrateView;
+        private final TextView mealProductWeightView;
 
         public MealProductViewHolder(@NonNull View view) {
             super(view);
-            nameView = (TextView) view.findViewById(R.id.meal_product_item_name);
-            /*energyView = (TextView) view.findViewById(R.id.product_energy);
-            proteinView = (TextView) view.findViewById(R.id.product_protein);
-            fatView = (TextView) view.findViewById(R.id.product_fat);
-            carbohydrateView = (TextView) view.findViewById(R.id.product_carbohydrate);*/
-            weightView = (TextView) view.findViewById(R.id.meal_product_item_weight);
+            mealProductNameView = view.findViewById(R.id.meal_product_item_name);
+            mealProductEnergyView = view.findViewById(R.id.meal_product_energy);
+            mealProductProteinView = view.findViewById(R.id.meal_product_protein);
+            mealProductFatView = view.findViewById(R.id.meal_product_fat);
+            mealProductCarbohydrateView = view.findViewById(R.id.meal_product_carbohydrate);
+            mealProductWeightView = view.findViewById(R.id.meal_product_item_weight);
             view.setOnClickListener(this);
             view.setOnLongClickListener(this);
         }

@@ -3,9 +3,10 @@ package com.seysen.hikingmealsforandroid.core;
 import android.os.Parcel;
 import android.os.Parcelable;
 
-public class MealProduct extends Product{
+public class MealProduct implements Parcelable {
 
-    private String productName;//name of the product
+    private Product product;//name of the product
+    private String productName;
     private double energy;//energy per weight
     private double protein;//protein per weight
     private double fat;//fat per weight
@@ -13,12 +14,14 @@ public class MealProduct extends Product{
     private double weight;
 
     public MealProduct(Product product, double weight) {
+        this.product = product;
         this.productName = product.getProductName();
-        this.energy = product.getEnergy() * weight/100;
-        this.protein = product.getProtein() * weight/100;
-        this.fat = product.getFat() * weight/100;
-        this.carbohydrate = product.getCarbohydrate() * weight/100;
+        //this.energy = product.getEnergy() * weight/100;
+        //this.protein = product.getProtein() * weight/100;
+        //this.fat = product.getFat() * weight/100;
+        //this.carbohydrate = product.getCarbohydrate() * weight/100;
         this.weight = weight;
+        this.update();
     }
 
         /*public MealProduct() {
@@ -27,12 +30,21 @@ public class MealProduct extends Product{
 
 
     protected MealProduct(Parcel in) {
-        productName = in.readString();
-        energy = in.readDouble();
-        protein = in.readDouble();
-        fat = in.readDouble();
-        carbohydrate = in.readDouble();
+        product = in.readParcelable(Product.class.getClassLoader());
+        assert product != null;
+        productName = product.getProductName();
+        //energy = in.readDouble();
+        //protein = in.readDouble();
+        //fat = in.readDouble();
+        //carbohydrate = in.readDouble();
         weight = in.readDouble();
+        update();
+    }
+
+    @Override
+    public void writeToParcel(Parcel dest, int flags) {
+        dest.writeParcelable(product,flags);
+        dest.writeDouble(weight);
     }
 
     public static final Creator<MealProduct> CREATOR = new Creator<MealProduct>() {
@@ -47,54 +59,28 @@ public class MealProduct extends Product{
         }
     };
 
-    @Override
+    public Product getProduct() {
+        return product;
+    }
+
     public String getProductName() {
         return productName;
     }
 
-    @Override
-    public void setProductName(String productName) {
-        this.productName = productName;
-    }
-
-    @Override
     public double getEnergy() {
-        return super.getEnergy();
+        return energy;
     }
 
-    @Override
     public double getProtein() {
-        return super.getProtein();
+        return protein;
     }
 
-    @Override
     public double getFat() {
-        return super.getFat();
+        return fat;
     }
 
-    @Override
     public double getCarbohydrate() {
-        return super.getCarbohydrate();
-    }
-
-    @Override
-    public void setEnergy(double energy) {
-        super.setEnergy(energy);
-    }
-
-    @Override
-    public void setProtein(double protein) {
-        super.setProtein(protein);
-    }
-
-    @Override
-    public void setFat(double fat) {
-        super.setFat(fat);
-    }
-
-    @Override
-    public void setCarbohydrate(double carbohydrate) {
-        super.setCarbohydrate(carbohydrate);
+        return carbohydrate;
     }
 
     public double getWeight() {
@@ -105,18 +91,17 @@ public class MealProduct extends Product{
         this.weight = weight;
     }
 
+    private void update() {
+        this.energy = product.getEnergy()*weight/100;
+        this.protein = product.getProtein()*weight/100;
+        this.fat = product.getFat()*weight/100;
+        this.carbohydrate = product.getCarbohydrate()*weight/100;
+    }
+
     @Override
     public int describeContents() {
         return 0;
     }
 
-    @Override
-    public void writeToParcel(Parcel dest, int flags) {
-        dest.writeString(productName);
-        dest.writeDouble(energy);
-        dest.writeDouble(protein);
-        dest.writeDouble(fat);
-        dest.writeDouble(carbohydrate);
-        dest.writeDouble(weight);
-    }
+
 }
