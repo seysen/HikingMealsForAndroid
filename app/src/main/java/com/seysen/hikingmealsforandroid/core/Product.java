@@ -4,13 +4,14 @@ import android.os.Parcel;
 import android.os.Parcelable;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
-import android.widget.ArrayAdapter;
 
 import java.util.ArrayList;
 
+//TODO remove duplicate products
+
 public class Product implements Parcelable {
     private static final String TAG = "Product";
-    private static ArrayList<Product> products = new ArrayList<Product>();
+    private static ArrayList<Product> products = new ArrayList<>();
 
     private String productName;//name of the product
     private double energy;//energy per 100 grams

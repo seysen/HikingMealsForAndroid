@@ -1,10 +1,7 @@
 package com.seysen.hikingmealsforandroid.fragments;
 
-import android.annotation.SuppressLint;
-import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
-import android.support.annotation.NonNull;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -23,10 +20,6 @@ import com.seysen.hikingmealsforandroid.helper.ProductAdapter;
 import java.util.ArrayList;
 import java.util.Objects;
 
-
-/**
- * A simple {@link Fragment} subclass.
- */
 public class ProductsFragment extends Fragment implements Datable {
 
     public static final String ID_KEY = "product_id";
@@ -51,7 +44,6 @@ public class ProductsFragment extends Fragment implements Datable {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        // Inflate the layout for this fragment
         Log.d(TAG,"Products Fragment Created");
         View view = inflater.inflate(R.layout.fragment_products, container, false);
         productList = view.findViewById(R.id.products);

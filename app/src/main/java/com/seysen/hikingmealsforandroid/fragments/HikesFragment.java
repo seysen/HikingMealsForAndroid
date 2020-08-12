@@ -8,10 +8,6 @@ import android.view.ViewGroup;
 
 import com.seysen.hikingmealsforandroid.R;
 
-
-/**
- * A simple {@link Fragment} subclass.
- */
 public class HikesFragment extends Fragment {
 
     public HikesFragment() {

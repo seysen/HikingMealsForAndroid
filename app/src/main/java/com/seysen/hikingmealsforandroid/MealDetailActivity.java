@@ -1,6 +1,5 @@
 package com.seysen.hikingmealsforandroid;
 
-import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.support.annotation.Nullable;
 import android.support.design.widget.FloatingActionButton;
@@ -16,16 +15,15 @@ import android.widget.TextView;
 import com.seysen.hikingmealsforandroid.core.Meal;
 import com.seysen.hikingmealsforandroid.core.MealProduct;
 import com.seysen.hikingmealsforandroid.core.Product;
-import com.seysen.hikingmealsforandroid.fragments.MealsFragment;
 import com.seysen.hikingmealsforandroid.helper.CustomDialogFragment;
+import com.seysen.hikingmealsforandroid.helper.Datable;
+import com.seysen.hikingmealsforandroid.helper.MealDetailDialogFragment;
 import com.seysen.hikingmealsforandroid.helper.MealProductAdapter;
 
 import java.util.ArrayList;
+import java.util.Objects;
 
-
-
-public class MealDetailActivity extends AppCompatActivity {
-
+public class MealDetailActivity extends AppCompatActivity implements Datable {
     private static final String TAG = "meal_detail";
     public static final String ID_KEY = "product_id";
     private static final int RESULT_OK = 0;
@@ -36,6 +34,7 @@ public class MealDetailActivity extends AppCompatActivity {
     public static final String MEALNAME = "meal";
     private int position;
     private MealProductAdapter adapter;
+    private Meal meal;
     private EditText mealName;
     private TextView mealEnergy;
     private TextView mealProtein;
@@ -43,11 +42,8 @@ public class MealDetailActivity extends AppCompatActivity {
     private TextView mealCarbohydrate;
     private TextView mealWeight;
     private RecyclerView mealProducts;
-    //private Meal meal;
     private ArrayList<MealProduct> mProducts = new ArrayList<>();
 
-
-    //@SuppressLint({"WrongViewCast", "DefaultLocale"})
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -82,7 +78,7 @@ public class MealDetailActivity extends AppCompatActivity {
                 Log.d(TAG, "onItemLongClick pos = " + position);
                 String productName = mProducts.get(position).getProductName();
                 Log.d(TAG, "productName = " + productName);
-                CustomDialogFragment dialog = new CustomDialogFragment();
+                MealDetailDialogFragment dialog = new MealDetailDialogFragment();
                 Bundle args = new Bundle();
                 args.putString("item","product");
                 args.putString("name", productName);
@@ -108,7 +104,7 @@ public class MealDetailActivity extends AppCompatActivity {
             Log.d(TAG,"Get position with KEY = " + ID_KEY);
             position = arguments.getInt(ID_KEY);
             Log.d(TAG,"Position = " + position);
-            Meal meal = arguments.getParcelable(MEALNAME);
+            meal = arguments.getParcelable(MEALNAME);
             Log.d(TAG,String.valueOf(meal));
             assert meal != null;
             ArrayList<MealProduct> products = meal.getMealProducts();
@@ -131,24 +127,38 @@ public class MealDetailActivity extends AppCompatActivity {
     @Override
     protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
-
+        Log.d(TAG,"OnActivityResult");
+        if (resultCode==RESULT_OK) {
+            if (requestCode == REQUEST_EDIT_TYPE) {
+                Log.d(TAG, "Request edit");
+                Log.d(TAG, "Result OK");
+                int position = Objects.requireNonNull(data).getIntExtra(ID_KEY, 0);
+                MealProduct mProduct = data.getParcelableExtra(PRODUCTNAME);
+                mProducts.set(position, mProduct);
+            } else if (requestCode == REQUEST_CREATE_TYPE) {
+                Log.d(TAG, "Result OK");
+                int position = Objects.requireNonNull(data).getIntExtra(ID_KEY, 0);
+                MealProduct mProduct = data.getParcelableExtra(PRODUCTNAME);
+                mProducts.add(mProduct);
+            }
+            else {
+                Log.d(TAG, "Result super");
+                super.onActivityResult(requestCode, resultCode, data);
+            }
+        }
+        Log.d(TAG, "Notify data changed");
+        adapter.notifyDataSetChanged();
+        updateMeal();
     }
 
     public void onOKClick (View view) {
         Log.d(TAG, "OK click");
+        //<TODO> Add check on empty mane
         String mMealName = mealName.getText().toString();
-        //double mProductEnergy = Double.parseDouble(mealEnergy.getText().toString());
-        //double mProductProtein = Double.parseDouble(mealProtein.getText().toString());
-        //double mProductFat = Double.parseDouble(mealFat.getText().toString());
-        //double mProductCarbohydrate = Double.parseDouble(mealCarbohydrate.getText().toString());
         Meal meal = new Meal(mMealName, mProducts);
         Intent data = new Intent();
         data.putExtra(ID_KEY,position);
         data.putExtra(MEALNAME,meal);
-        //data.putExtra(ENERGY,mProductEnergy);
-        //data.putExtra(PROTEIN,mProductProtein);
-        //data.putExtra(FAT,mProductFat);
-        //data.putExtra(CARBOHYDRATE,mProductCarbohydrate);
         setResult(RESULT_OK,data);
         finish();
     }
@@ -157,5 +167,22 @@ public class MealDetailActivity extends AppCompatActivity {
         Log.d(TAG, "Cancel click");
         setResult(RESULT_CANCELED);
         finish();
+    }
+
+    public void updateMeal() {
+        meal.setMealProducts(mProducts);
+        mealEnergy.setText(String.format("%.1f", + meal.getEnergy()).replace(",", "."));
+        mealProtein.setText(String.format("%.1f", + meal.getProtein()).replace(",", "."));
+        mealFat.setText(String.format("%.1f", + meal.getFat()).replace(",", "."));
+        mealCarbohydrate.setText(String.format("%.1f", + meal.getCarbohydrate()).replace(",", "."));
+        mealWeight.setText(String.format("%.1f", + meal.getWeight()).replace(",", "."));
+    }
+
+    @Override
+    public void removeItem(int position) {
+        Log.d(TAG, "removeItem");
+        mProducts.remove(position);
+        adapter.notifyDataSetChanged();
+        updateMeal();
     }
 }

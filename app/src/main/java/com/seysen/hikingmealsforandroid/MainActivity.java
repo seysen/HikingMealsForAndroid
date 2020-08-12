@@ -30,8 +30,6 @@ import static com.seysen.hikingmealsforandroid.fragments.MealsFragment.MEALNAME;
 import static com.seysen.hikingmealsforandroid.fragments.ProductsFragment.PRODUCTNAME;
 import static com.seysen.hikingmealsforandroid.fragments.ProductsFragment.REQUEST_CREATE_TYPE;
 
-//import static com.seysen.hikingmealsforandroid.fragments.ProductsFragment.REQUEST_CREATE_TYPE;
-
 public class MainActivity extends AppCompatActivity {
 
     private static final String TAG = "main_activity";
@@ -39,9 +37,6 @@ public class MainActivity extends AppCompatActivity {
     private ViewPager viewPager = null;
     private TabLayout tabLayout = null;
     private Fragment activeFragment = null;
-
-    //static final int REQUEST_CREATE_TYPE=1;
-    //static final int REQUEST_EDIT_TYPE=2;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -62,7 +57,6 @@ public class MainActivity extends AppCompatActivity {
         viewPager.addOnPageChangeListener(new ViewPager.OnPageChangeListener() {
             @Override
             public void onPageScrolled(int i, float v, int i1) {
-                //Log.d(TAG, "onPageScrolled");
             }
 
             @Override
@@ -71,37 +65,12 @@ public class MainActivity extends AppCompatActivity {
                 switch (i) {
                     case 0: {
                         Log.d(TAG, "onPageSelected1");
-
                         fab.hide();
                         break;
                     }
                     case 1: {
                         Log.d(TAG, "onPageSelected2");
                         fab.hide();
-                        /*fab.setOnClickListener(new View.OnClickListener() {
-                            @Override
-                            public void onClick(View v) {
-                                Log.d(TAG, "onFloatingActionButtonClick");
-                                int position = tabLayout.getSelectedTabPosition();
-                                Intent intent = null;
-                                switch (position) {
-                                    case 0: {
-                                        break;
-                                    }
-                                    case 1: {
-                                        intent = new Intent (v.getContext(), MealDetailActivity.class);
-                                        break;
-                                    }
-                                    case 2: {
-
-                                        break;
-                                    }
-                                }
-                                if (intent != null) {
-                                    startActivityForResult(intent, MealsFragment.REQUEST_CREATE_TYPE);
-                                }
-                            }
-                        });*/
                         fab.setImageResource(android.R.drawable.ic_menu_add);
                         fab.show();
                         break;
@@ -109,31 +78,6 @@ public class MainActivity extends AppCompatActivity {
                     case 2: {
                         Log.d(TAG, "onPageSelected3");
                         fab.hide();
-                        /*fab.setOnClickListener(new View.OnClickListener() {
-                            @Override
-                            public void onClick(View v) {
-                                Log.d(TAG, "onFloatingActionButtonClick");
-                                int position = tabLayout.getSelectedTabPosition();
-                                onProductAdd(position);
-                                Intent intent = null;
-                                switch (position) {
-                                    case 0: {
-                                        break;
-                                    }
-                                    case 1: {
-                                        break;
-                                    }
-                                    case 2: {
-
-
-                                        break;
-                                    }
-                                }
-                                if (intent != null) {
-                                    startActivityForResult(intent, ProductsFragment.REQUEST_CREATE_TYPE);
-                                }
-                            }
-                        });*/
                         fab.setImageResource(android.R.drawable.ic_menu_add);
                         fab.show();
                         break;
@@ -143,7 +87,6 @@ public class MainActivity extends AppCompatActivity {
 
             @Override
             public void onPageScrollStateChanged(int i) {
-                //Log.d(TAG, "onPageScrollStateChanged");
             }
         });
 
@@ -171,16 +114,6 @@ public class MainActivity extends AppCompatActivity {
             }
         });
     }
-
-    /*@Override
-    public void onAttachFragment(Fragment fragment) {
-        super.onAttachFragment(fragment);
-        if (fragment instanceof ProductsFragment) {
-            ProductsFragment productsFragment = (ProductsFragment) fragment;
-            productsFragment.setOnProductAddListener(this);
-        }
-    }*/
-
 
     @Override
     public void onActivityResult (int requestCode, int resultCode, Intent data) {

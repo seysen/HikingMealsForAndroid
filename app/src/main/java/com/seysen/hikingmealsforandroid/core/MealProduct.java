@@ -16,27 +16,14 @@ public class MealProduct implements Parcelable {
     public MealProduct(Product product, double weight) {
         this.product = product;
         this.productName = product.getProductName();
-        //this.energy = product.getEnergy() * weight/100;
-        //this.protein = product.getProtein() * weight/100;
-        //this.fat = product.getFat() * weight/100;
-        //this.carbohydrate = product.getCarbohydrate() * weight/100;
         this.weight = weight;
         this.update();
     }
-
-        /*public MealProduct() {
-            this("Product",0.0,0.0,0.0,0.0,0.0);
-        }*/
-
 
     protected MealProduct(Parcel in) {
         product = in.readParcelable(Product.class.getClassLoader());
         assert product != null;
         productName = product.getProductName();
-        //energy = in.readDouble();
-        //protein = in.readDouble();
-        //fat = in.readDouble();
-        //carbohydrate = in.readDouble();
         weight = in.readDouble();
         update();
     }
@@ -102,6 +89,4 @@ public class MealProduct implements Parcelable {
     public int describeContents() {
         return 0;
     }
-
-
 }

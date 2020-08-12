@@ -23,9 +23,7 @@ public class Meal implements Parcelable {
 
     public Meal(String mealName, ArrayList<MealProduct> mealProducts) {
         this.mealName = mealName;
-        //Log.d(TAG,"Meal name = " + String.valueOf(mealName));
         this.mealProducts = mealProducts;
-        //Log.d(TAG,"Meal products = " + String.valueOf(mealProducts));
         this.update();
     }
 
@@ -38,7 +36,6 @@ public class Meal implements Parcelable {
     protected Meal(Parcel in) {
         mealName = in.readString();
         mealProducts = in.createTypedArrayList(MealProduct.CREATOR);
-        //Log.d(TAG,String.valueOf(mealProducts));
         this.update();
     }
 
@@ -47,17 +44,10 @@ public class Meal implements Parcelable {
         return 0;
     }
 
-    //@RequiresApi(api = Build.VERSION_CODES.Q)
     @Override
     public void writeToParcel(Parcel dest, int flags) {
         dest.writeString(mealName);
         dest.writeTypedList(mealProducts);
-        //dest.writeParcelableList(mealProducts,flags);
-        //dest.writeDouble(energy);
-        //dest.writeDouble(protein);
-        //dest.writeDouble(fat);
-        //dest.writeDouble(carbohydrate);
-        //dest.writeDouble(weight);
     }
 
     //Methods
@@ -144,8 +134,6 @@ public class Meal implements Parcelable {
         this.update();
     }
 
-
-
     private void update() {
         this.energy = 0;
         this.protein = 0;
@@ -159,17 +147,13 @@ public class Meal implements Parcelable {
             this.carbohydrate += product.getCarbohydrate();
             this.weight += product.getWeight();
         }
-        Log.d(TAG,"Meal name = " + String.valueOf(mealName));
-        Log.d(TAG,"Meal products = " + String.valueOf(mealProducts));
+        Log.d(TAG,"Meal name = " + mealName);
+        Log.d(TAG,"Meal products = " + mealProducts);
     }
-
-
 
     public void addMealProduct(MealProduct product) {
         this.mealProducts.add(product);
         this.update();
     }
-
-
 }
 

@@ -23,9 +23,6 @@ import java.util.ArrayList;
 import java.util.Objects;
 
 
-/**
- * A simple {@link Fragment} subclass.
- */
 public class MealsFragment extends Fragment implements Datable {
 
     public static final String ID_KEY = "meal_id";
@@ -50,7 +47,6 @@ public class MealsFragment extends Fragment implements Datable {
     @Override
     public View onCreateView(final LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_meals, container, false);
         mealList = view.findViewById(R.id.meals);
         mealList.setLayoutManager(new LinearLayoutManager(mealList.getContext()));
@@ -62,7 +58,6 @@ public class MealsFragment extends Fragment implements Datable {
             @Override
             public void onItemClick(int position, View v) {
                 Log.d(TAG, "onItemClick position: " + position);
-                //Log.d(TAG, "View = " + v);
                 Intent intent = new Intent(v.getContext(), MealDetailActivity.class);
                 intent.putExtra(ID_KEY, position);
                 intent.putExtra(MEALNAME, mMeals.get(position));
@@ -77,7 +72,6 @@ public class MealsFragment extends Fragment implements Datable {
                 Log.d(TAG, "onItemLongClick pos = " + position);
                 String mealName = mMeals.get(position).getMealName();
                 CustomDialogFragment dialog = new CustomDialogFragment();
-
                 Bundle args = new Bundle();
                 args.putString("item","meal");
                 args.putString("name", mealName);
@@ -149,81 +143,4 @@ public class MealsFragment extends Fragment implements Datable {
         }
     }
 
-    /*public static class MealAdapter extends RecyclerView.Adapter<MealAdapter.MealsViewHolder> {
-
-        private final TypedValue mTypedValue = new TypedValue();
-        private int mBackground;
-        private LayoutInflater inflater;
-        private ArrayList<Meal> meals;
-        private static ClickListener clickListener;
-
-        @NonNull
-        @Override
-        public MealsFragment.MealAdapter.MealsViewHolder onCreateViewHolder(@NonNull ViewGroup viewGroup, int i) {
-            View view = LayoutInflater.from(viewGroup.getContext())
-                    .inflate(R.layout.meal_item, viewGroup, false);
-            return new MealsFragment.MealAdapter.MealsViewHolder(view);
-        }
-
-        @Override
-        public void onBindViewHolder(@NonNull MealsFragment.MealAdapter.MealsViewHolder holder, int position) {
-            Meal meal = mMeals.get(position);
-            holder.nameView.setText(meal.getMealName());
-            holder.energyView.setText(String.format("%.1f", + meal.getEnergy()).replace(",", "."));
-            holder.proteinView.setText(String.format("%.1f", +meal.getProtein()).replace(",", "."));
-            holder.fatView.setText(String.format("%.1f", + meal.getFat()).replace(",", "."));
-            holder.carbohydrateView.setText(String.format("%.1f", + meal.getCarbohydrate()).replace(",", "."));
-        }
-
-        @Override
-        public int getItemCount() {
-            return mMeals.size();
-        }
-
-        public MealAdapter(Context context, ArrayList<Meal> items) {
-            context.getTheme().resolveAttribute(R.attr.selectableItemBackground, mTypedValue, true);
-            mBackground = mTypedValue.resourceId;
-            mMeals = items;
-        }
-
-        public static class MealsViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener, View.OnLongClickListener {
-
-            private final TextView nameView;
-            private final TextView energyView;
-            private final TextView proteinView;
-            private final TextView fatView;
-            private final TextView carbohydrateView;
-
-            public MealsViewHolder(@NonNull View view) {
-                super(view);
-                nameView = (TextView)view.findViewById(R.id.mealName);
-                energyView = (TextView)view.findViewById(R.id.meal_energy);
-                proteinView = (TextView)view.findViewById(R.id.meal_protein);
-                fatView = (TextView)view.findViewById(R.id.meal_fat);
-                carbohydrateView = (TextView)view.findViewById(R.id.meal_carbohydrate);
-                itemView.setOnClickListener(this);
-                itemView.setOnLongClickListener(this);
-            }
-
-            @Override
-            public void onClick(View v) {
-                clickListener.onItemClick(getAdapterPosition(), v);
-            }
-
-            @Override
-            public boolean onLongClick(View v) {
-                clickListener.onItemLongClick(getAdapterPosition(), v);
-                return false;
-            }
-        }
-
-        public void setOnItemClickListener(ClickListener clickListener) {
-            MealAdapter.clickListener = clickListener;
-        }
-
-        public interface ClickListener {
-            void onItemClick(int position, View v);
-            void onItemLongClick(int position, View v);
-        }
-    }*/
 }
