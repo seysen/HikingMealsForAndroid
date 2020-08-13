@@ -25,7 +25,7 @@ import java.util.Objects;
 
 public class MealDetailActivity extends AppCompatActivity implements Datable {
     private static final String TAG = "meal_detail";
-    public static final String ID_KEY = "product_id";
+    public static final String ID_KEY = "meal_id";
     private static final int RESULT_OK = 0;
     private static final int RESULT_CANCELED = 1;
     public static final int REQUEST_CREATE_TYPE=1;

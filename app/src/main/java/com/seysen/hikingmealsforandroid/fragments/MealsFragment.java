@@ -61,9 +61,7 @@ public class MealsFragment extends Fragment implements Datable {
                 Intent intent = new Intent(v.getContext(), MealDetailActivity.class);
                 intent.putExtra(ID_KEY, position);
                 intent.putExtra(MEALNAME, mMeals.get(position));
-                Log.d(TAG, String.valueOf(intent));
-                Log.d(TAG, String.valueOf(intent.getIntExtra(ID_KEY,0)));
-                Log.d(TAG, String.valueOf(intent.getExtras()));
+                Log.d(TAG, "Extras = " + String.valueOf(intent.getExtras()));
                 startActivityForResult(intent, REQUEST_EDIT_TYPE);
             }
 
@@ -93,7 +91,6 @@ public class MealsFragment extends Fragment implements Datable {
             if(resultCode==RESULT_OK){
                 Log.d(TAG, "Result OK");
                 int position = data.getIntExtra(ID_KEY,0);
-                Log.d(TAG, "Position = " + position);
                 Meal meal = data.getParcelableExtra(MEALNAME);
                 mMeals.set(position,meal);
             }

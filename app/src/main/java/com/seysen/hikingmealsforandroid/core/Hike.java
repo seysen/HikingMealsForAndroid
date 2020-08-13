@@ -5,7 +5,7 @@ import java.util.HashMap;
 
 public class Hike {
     //variables
-    private static HashMap<String, Hike> hikes = new HashMap<String, Hike>();
+    private static ArrayList<Hike> hikes = new ArrayList<Hike>();
     private String hikeName;
     private int quantity;
     private ArrayList<HikeDay> hikeDays = new ArrayList<HikeDay>();
@@ -33,11 +33,11 @@ public class Hike {
         this.quantity = quantity;
     }
 
-    public static HashMap<String, Hike> getHikes() {
+    public static ArrayList<Hike> getHikes() {
         return hikes;
     }
 
-    public static void setHikes(HashMap<String, Hike> hikes) {
+    public static void setHikes(ArrayList<Hike> hikes) {
         Hike.hikes = hikes;
     }
 
@@ -106,21 +106,21 @@ public class Hike {
     public Hike(String hikeName) {
         this.hikeName = hikeName;
         this.quantity = 0;
-        hikes.put(hikeName,this);
+        hikes.add(this);
         hikeDays.add(new HikeDay());
     }
 
     public Hike(String hikeName, int quantity) {
         this.hikeName = hikeName;
         this.quantity = quantity;
-        hikes.put(hikeName,this);
+        hikes.add(this);
         hikeDays.add(new HikeDay());
     }
 
     public Hike(String hikeName, int quantity, int duration) {
         this.hikeName = hikeName;
         this.quantity = quantity;
-        hikes.put(hikeName,this);
+        hikes.add(this);
         for (int i=0;i<duration;i++) {
             hikeDays.add(new HikeDay());
         }
@@ -130,8 +130,13 @@ public class Hike {
         this.hikeName = hikeName;
         this.quantity = quantity;
         this.hikeDays = hikeDays;
-        hikes.put(hikeName,this);
+        hikes.add(this);
     }
+
+    //TODO getHikeWeight
+    /*public Double getWeight() {
+        return weight;
+    }*/
 
     public class HikeDay {
         //variables
