@@ -10,6 +10,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import com.seysen.hikingmealsforandroid.core.Meal;
 import com.seysen.hikingmealsforandroid.helper.CustomDialogFragment;
 import com.seysen.hikingmealsforandroid.helper.Datable;
 import com.seysen.hikingmealsforandroid.ProductDetailActivity;
@@ -35,7 +36,7 @@ public class ProductsFragment extends Fragment implements Datable {
     public static final String ENERGY = "energy";
     public static final String PROTEIN = "protein";
     public static final String FAT = "fat";
-    private static ArrayList<Product> mProducts = new ArrayList<>();
+    private static ArrayList<Product> mProducts;
 
     public ProductsFragment() {
         // Required empty public constructor
@@ -48,7 +49,8 @@ public class ProductsFragment extends Fragment implements Datable {
         View view = inflater.inflate(R.layout.fragment_products, container, false);
         productList = view.findViewById(R.id.products);
         productList.setLayoutManager(new LinearLayoutManager(productList.getContext()));
-        initProducts();
+        //initProducts();
+        mProducts = Product.getProducts();
         adapter = new ProductAdapter(Objects.requireNonNull(getActivity()),mProducts);
         productList.setAdapter(adapter);
 
@@ -93,7 +95,14 @@ public class ProductsFragment extends Fragment implements Datable {
                 Log.d(TAG, "Result OK");
                 int position = data.getIntExtra(ID_KEY,0);
                 Product mProduct = data.getParcelableExtra(PRODUCTNAME);
-                mProducts.set(position,mProduct);
+                //mProducts.set(position,mProduct);
+                Product product = mProducts.get(position);
+                product.setProductName(mProduct.getProductName());
+                product.setEnergy(mProduct.getEnergy());
+                product.setProtein(mProduct.getProtein());
+                product.setCarbohydrate(mProduct.getCarbohydrate());
+                product.setFat(mProduct.getFat());
+                Meal.updateMeals(product);
             }
             else{
                 Log.d(TAG, "Edit canceled");
@@ -136,7 +145,7 @@ public class ProductsFragment extends Fragment implements Datable {
         }
     }*/
 
-    private void initProducts() {
+    /*private void initProducts() {
         if (mProducts.isEmpty()) {
             Log.d(TAG,"Init Products");
             mProducts.add(new Product("Pasta", 350, 13, 1.5, 72));
@@ -158,6 +167,6 @@ public class ProductsFragment extends Fragment implements Datable {
             mProducts.add(new Product("Bread", 264, 7.5, 2.9, 50.9));
             mProducts.add(new Product("Sausage", 461, 24, 40.5, 0));
         }
-    }
+    }*/
 
 }

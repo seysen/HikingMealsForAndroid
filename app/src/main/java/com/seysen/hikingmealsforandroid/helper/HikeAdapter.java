@@ -34,8 +34,8 @@ public class HikeAdapter extends RecyclerView.Adapter<HikeAdapter.HikeViewHolder
     public void onBindViewHolder(@NonNull HikeViewHolder hikeViewHolder, int i) {
         Hike hike = hikes.get(i);
         hikeViewHolder.hikeView.setText(hike.getHikeName());
-        hikeViewHolder.durationView.setText(hike.getDuration());
-        hikeViewHolder.quantityView.setText(hike.getQuantity());
+        hikeViewHolder.durationView.setText(String.format("%d", + hike.getDuration()).replace(",", "."));
+        hikeViewHolder.quantityView.setText(String.format("%d", + hike.getQuantity()).replace(",", "."));
         //hikeViewHolder.weightView.setText(hike.getWeight());
         //hikeViewHolder.personWeightView.setText(hike.getWeight()/hike.getQuantity());
     }

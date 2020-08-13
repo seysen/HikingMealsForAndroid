@@ -5,12 +5,27 @@ import java.util.HashMap;
 
 public class Hike {
     //variables
-    private static ArrayList<Hike> hikes = new ArrayList<Hike>();
+    public static ArrayList<Hike> hikes = new ArrayList<Hike>();
     private String hikeName;
     private int quantity;
     private ArrayList<HikeDay> hikeDays = new ArrayList<HikeDay>();
     private HashMap<Product,Double> shippingChart = new HashMap<Product,Double>();
     //methods
+
+    static {
+        Hike pvd2 = new Hike("pvd 2 days",2,2);
+        for (HikeDay hikeDay: pvd2.getHikeDays()) {
+            hikeDay.addMeal(Meal.getMeal("porridge"));
+            hikeDay.addMeal(Meal.getMeal("sandwich"));
+            hikeDay.addMeal(Meal.getMeal("pilaf"));
+        }
+        Hike pvd6 = new Hike("pvd 6 days",2,6);
+        for (HikeDay hikeDay: pvd2.getHikeDays()) {
+            hikeDay.addMeal(Meal.getMeal("porridge"));
+            hikeDay.addMeal(Meal.getMeal("sandwich"));
+            hikeDay.addMeal(Meal.getMeal("pilaf"));
+        }
+    }
 
     public int getDuration() {
         return hikeDays.size();
@@ -144,7 +159,9 @@ public class Hike {
 
         //methods
         public void addMeal(Meal meal) {
-            meals.add(meal);
+            if (meal!=null) {
+                meals.add(meal);
+            }
         }
 
         public void removeMeal(int index) {

@@ -25,7 +25,7 @@ public class HikesFragment extends Fragment {
     private static final int RESULT_CANCELED = 1;
     public static final int REQUEST_CREATE_TYPE = 1;
     public static final int REQUEST_EDIT_TYPE = 2;
-    private static ArrayList<Hike> mHikes = new ArrayList<>();
+    private static ArrayList<Hike> mHikes;
 
     public HikesFragment() {
         // Required empty public constructor
@@ -39,7 +39,8 @@ public class HikesFragment extends Fragment {
         View view = inflater.inflate(R.layout.fragment_hikes, container, false);
         hikeList = view.findViewById(R.id.hikes);
         hikeList.setLayoutManager(new LinearLayoutManager(hikeList.getContext()));
-        initHikes();
+        //initHikes();
+        mHikes = Hike.getHikes();
         adapter = new HikeAdapter(Objects.requireNonNull(getActivity()),mHikes);
         hikeList.setAdapter(adapter);
 
@@ -59,6 +60,6 @@ public class HikesFragment extends Fragment {
     }
 
     private void initHikes() {
-       
+
     }
 }

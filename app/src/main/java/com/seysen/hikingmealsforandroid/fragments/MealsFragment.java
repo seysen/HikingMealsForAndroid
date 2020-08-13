@@ -38,10 +38,16 @@ public class MealsFragment extends Fragment implements Datable {
     public static final String ENERGY = "energy";
     public static final String PROTEIN = "protein";
     public static final String FAT = "fat";
-    private static ArrayList<Meal> mMeals = new ArrayList<>();
+    private static ArrayList<Meal> mMeals;
 
     public MealsFragment() {
         // Required empty public constructor
+    }
+
+    //todo update meal item on updating product
+    public static void updateList(Meal meal) {
+        //mMeals.set(mMeals.indexOf(meal),meal);
+        //adapter.notifyDataSetChanged();
     }
 
     @Override
@@ -50,7 +56,8 @@ public class MealsFragment extends Fragment implements Datable {
         View view = inflater.inflate(R.layout.fragment_meals, container, false);
         mealList = view.findViewById(R.id.meals);
         mealList.setLayoutManager(new LinearLayoutManager(mealList.getContext()));
-        initMeals();
+        //initMeals();
+        mMeals = Meal.getMeals();
         adapter = new MealAdapter(Objects.requireNonNull(getActivity()),mMeals);
         mealList.setAdapter(adapter);
 
@@ -117,27 +124,27 @@ public class MealsFragment extends Fragment implements Datable {
         adapter.notifyDataSetChanged();
     }
 
-    private void initMeals() {
+    /*private void initMeals() {
         if (mMeals.isEmpty()) {
             Meal pilaf = new Meal("Pilaf");
-            pilaf.addMealProduct(new MealProduct(new Product("Rice", 374, 7.51, 1.03, 80.89),100));
-            pilaf.addMealProduct(new MealProduct(new Product("Onion", 47, 1.4, 0, 10.4),30));
-            pilaf.addMealProduct(new MealProduct(new Product("Carrot", 32, 1.3, 0.1, 6.9),30));
-            pilaf.addMealProduct(new MealProduct(new Product("Oil", 899, 0, 99, 0),10));
-            pilaf.addMealProduct(new MealProduct(new Product("Garlic", 134, 6.5, 0.5, 29.9),2.5));
-            pilaf.addMealProduct(new MealProduct(new Product("Mayonnaise", 624, 3.1, 67, 2.6),10));
-            pilaf.addMealProduct(new MealProduct(new Product("Ketchup", 93, 1.8, 1, 22.2), 10));
+            pilaf.addMealProduct(new MealProduct(Product.getProduct("Rice"),100));
+            pilaf.addMealProduct(new MealProduct(Product.getProduct("Onion"),30));
+            pilaf.addMealProduct(new MealProduct(Product.getProduct("Carrot"),30));
+            pilaf.addMealProduct(new MealProduct(Product.getProduct("Oil"),10));
+            pilaf.addMealProduct(new MealProduct(Product.getProduct("Garlic"),2.5));
+            pilaf.addMealProduct(new MealProduct(Product.getProduct("Mayonnaise"),10));
+            pilaf.addMealProduct(new MealProduct(Product.getProduct("Ketchup"), 10));
             mMeals.add(pilaf);
             Meal porridge = new Meal("Porridge");
-            porridge.addMealProduct(new MealProduct(new Product("Cereals", 414, 3.45, 3.45, 89.66),70));
-            porridge.addMealProduct(new MealProduct(new Product("Milk", 362, 33.2, 1, 52.6), 25));
-            porridge.addMealProduct(new MealProduct(new Product("Jam", 226, 0, 0, 56.5),10));
+            porridge.addMealProduct(new MealProduct(Product.getProduct("Cereals"),70));
+            porridge.addMealProduct(new MealProduct(Product.getProduct("Milk"), 25));
+            porridge.addMealProduct(new MealProduct(Product.getProduct("Jam"),10));
             mMeals.add(porridge);
             Meal sandwich = new Meal("Sandwich");
-            sandwich.addMealProduct(new MealProduct(new Product("Bread", 264, 7.5, 2.9, 50.9),50));
-            sandwich.addMealProduct(new MealProduct(new Product("Sausage", 461, 24, 40.5, 0),80));
+            sandwich.addMealProduct(new MealProduct(Product.getProduct("Bread"),50));
+            sandwich.addMealProduct(new MealProduct(Product.getProduct("Sausage"),80));
             mMeals.add(sandwich);
         }
-    }
+    }*/
 
 }

@@ -4,6 +4,8 @@ import android.os.Parcel;
 import android.os.Parcelable;
 import android.util.Log;
 
+import com.seysen.hikingmealsforandroid.fragments.MealsFragment;
+
 import java.util.ArrayList;
 
 public class Meal implements Parcelable {
@@ -18,6 +20,27 @@ public class Meal implements Parcelable {
     private double fat;
     private double carbohydrate;
     private double weight;
+
+    static {
+        Meal pilaf = new Meal("pilaf");
+        pilaf.addMealProduct(new MealProduct(Product.getProduct("rice"),100));
+        pilaf.addMealProduct(new MealProduct(Product.getProduct("onion"),30));
+        pilaf.addMealProduct(new MealProduct(Product.getProduct("carrot"),30));
+        pilaf.addMealProduct(new MealProduct(Product.getProduct("oil"),10));
+        pilaf.addMealProduct(new MealProduct(Product.getProduct("garlic"),2.5));
+        pilaf.addMealProduct(new MealProduct(Product.getProduct("mayonnaise"),10));
+        pilaf.addMealProduct(new MealProduct(Product.getProduct("ketchup"), 10));
+        meals.add(pilaf);
+        Meal porridge = new Meal("porridge");
+        porridge.addMealProduct(new MealProduct(Product.getProduct("cereals"),70));
+        porridge.addMealProduct(new MealProduct(Product.getProduct("milk"), 25));
+        porridge.addMealProduct(new MealProduct(Product.getProduct("jam"),10));
+        meals.add(porridge);
+        Meal sandwich = new Meal("sandwich");
+        sandwich.addMealProduct(new MealProduct(Product.getProduct("bread"),50));
+        sandwich.addMealProduct(new MealProduct(Product.getProduct("sausage"),80));
+        meals.add(sandwich);
+    }
 
     //Constructors
 
@@ -37,6 +60,29 @@ public class Meal implements Parcelable {
         mealName = in.readString();
         mealProducts = in.createTypedArrayList(MealProduct.CREATOR);
         this.update();
+    }
+
+    public static Meal getMeal(String mealName) {
+        Meal result = null;
+        for (Meal meal: meals) {
+            if (meal.getMealName().equals(mealName)){
+                result=meal;
+            }
+        }
+        return result;
+    }
+
+    public static void updateMeals(Product product) {
+        for (Meal meal:
+             meals) {
+            for (MealProduct mealProduct:
+            meal.getMealProducts()) {
+                if (mealProduct.getProduct().equals(product)) {
+                    meal.update();
+                    MealsFragment.updateList(meal);
+                }
+            }
+        }
     }
 
     @Override
@@ -152,8 +198,10 @@ public class Meal implements Parcelable {
     }
 
     public void addMealProduct(MealProduct product) {
-        this.mealProducts.add(product);
-        this.update();
+        if (product.getProduct()!=null) {
+            this.mealProducts.add(product);
+            this.update();
+        }
     }
 }
 

@@ -63,10 +63,15 @@ public class ProductDetailActivity extends AppCompatActivity {
         double mProductProtein = productProtein.getText().toString().equals("")? 0.0: Double.parseDouble(productProtein.getText().toString());
         double mProductFat = productFat.getText().toString().equals("")? 0.0: Double.parseDouble(productFat.getText().toString());
         double mProductCarbohydrate = productCarbohydrate.getText().toString().equals("")? 0.0: Double.parseDouble(productCarbohydrate.getText().toString());
-        Product mProduct = new Product(mProductName,mProductEnergy,mProductProtein,mProductFat,mProductCarbohydrate);
+        //Product mProduct = new Product(mProductName,mProductEnergy,mProductProtein,mProductFat,mProductCarbohydrate);
+        product.setProductName(mProductName);
+        product.setEnergy(mProductEnergy);
+        product.setProtein(mProductProtein);
+        product.setFat(mProductFat);
+        product.setCarbohydrate(mProductCarbohydrate);
         Intent data = new Intent();
         data.putExtra(ID_KEY,position);
-        data.putExtra(PRODUCTNAME,mProduct);
+        data.putExtra(PRODUCTNAME,product);
         setResult(RESULT_OK,data);
         Log.d(TAG, "Set result OK " + RESULT_OK);
         finish();

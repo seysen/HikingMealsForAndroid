@@ -2,9 +2,11 @@ package com.seysen.hikingmealsforandroid.core;
 
 import android.os.Parcel;
 import android.os.Parcelable;
+import android.util.Log;
 
 public class MealProduct implements Parcelable {
 
+    private final static String TAG = "MealProduct";
     private Product product;//name of the product
     private String productName;
     private double energy;//energy per weight
@@ -15,6 +17,7 @@ public class MealProduct implements Parcelable {
 
     public MealProduct(Product product, double weight) {
         this.product = product;
+        Log.d(TAG,"Product = " + product);
         this.productName = product.getProductName();
         this.weight = weight;
         this.update();
