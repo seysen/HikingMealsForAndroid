@@ -92,4 +92,10 @@ public class MealProduct implements Parcelable {
     public int describeContents() {
         return 0;
     }
+
+    public void setProduct(Product product) {
+        this.product = product;
+        productName = product.getProductName();
+        update();
+    }
 }

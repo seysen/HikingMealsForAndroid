@@ -14,6 +14,8 @@ import com.seysen.hikingmealsforandroid.core.Meal;
 import com.seysen.hikingmealsforandroid.core.MealProduct;
 import com.seysen.hikingmealsforandroid.core.Product;
 
+import java.util.ArrayList;
+
 import static com.seysen.hikingmealsforandroid.MealDetailActivity.ID_KEY;
 import static com.seysen.hikingmealsforandroid.MealDetailActivity.PRODUCTNAME;
 
@@ -42,7 +44,9 @@ public class MealAddProductActivity extends AppCompatActivity {
         spinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+                Log.d(TAG,"Position selected " + position);
                 product = Product.getProducts().get(position);
+                Log.d(TAG,"Product on position " + product);
             }
 
             @Override
@@ -57,16 +61,22 @@ public class MealAddProductActivity extends AppCompatActivity {
             position = arguments.getInt(ID_KEY);
             Log.d(TAG,"Position = " + position);
             mealProduct = getIntent().getParcelableExtra(PRODUCTNAME);
-            Log.d(TAG,"Product = " + product);
+            assert mealProduct != null;
             product = mealProduct.getProduct();
-            spinner.setSelection(Product.getProducts().indexOf(product));
+            Log.d(TAG,"Product = " + product);
+            spinner.setSelection(Product.getProducts().indexOf(product));//TODO does not work correct
             weight.setText(String.valueOf(mealProduct.getWeight()));
         }
     }
 
     public void onOKClick (View view) {
         Log.d(TAG, "OK click");
-        MealProduct mealProduct = new MealProduct(product, weight.getText().toString().equals("")? 0.0: Double.parseDouble(weight.getText().toString()));
+        if (mealProduct==null) {
+            mealProduct = new MealProduct(product, weight.getText().toString().equals("")? 0.0: Double.parseDouble(weight.getText().toString()));
+        }
+        mealProduct.setProduct(product);
+        Double productWeight = weight.getText().toString().equals("")? 0.0: Double.parseDouble(weight.getText().toString());
+        mealProduct.setWeight(productWeight);
         Intent data = new Intent();
         data.putExtra(ID_KEY,position);
         data.putExtra(PRODUCTNAME,mealProduct);

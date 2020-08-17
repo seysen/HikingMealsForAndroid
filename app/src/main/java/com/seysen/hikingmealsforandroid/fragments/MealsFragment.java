@@ -46,8 +46,29 @@ public class MealsFragment extends Fragment implements Datable {
 
     //todo update meal item on updating product
     public static void updateList(Meal meal) {
-        //mMeals.set(mMeals.indexOf(meal),meal);
+        Log.d(TAG,"Update List");
+        int position = mMeals.indexOf(meal);
+        Log.d(TAG,"Update position = " + position);
+        adapter.notifyItemChanged(position);
         //adapter.notifyDataSetChanged();
+    }
+
+    public static void updateMeals(Product product) {
+        Log.d(TAG,"Update meals with product " + product);
+        for (Meal meal:
+                mMeals) {
+            for (MealProduct mealProduct:
+                    meal.getMealProducts()) {
+                if (mealProduct.getProduct().getProductName().equals(product.getProductName())) {
+                    int position =  mMeals.indexOf(meal);
+                    Log.d(TAG,"Update meal " + meal +" at position " + position);
+                    meal.updateMealProducts();
+                    mMeals.set(position,meal);
+                    Log.d(TAG,"Update position = " + position);
+                    adapter.notifyItemChanged(position);
+                }
+            }
+        }
     }
 
     @Override
@@ -58,7 +79,7 @@ public class MealsFragment extends Fragment implements Datable {
         mealList.setLayoutManager(new LinearLayoutManager(mealList.getContext()));
         //initMeals();
         mMeals = Meal.getMeals();
-        adapter = new MealAdapter(Objects.requireNonNull(getActivity()),mMeals);
+        adapter = new MealAdapter(getActivity(),mMeals);
         mealList.setAdapter(adapter);
 
         adapter.setOnItemClickListener(new MealAdapter.ClickListener() {
@@ -89,6 +110,13 @@ public class MealsFragment extends Fragment implements Datable {
         return view;
     }
 
+    /*@Override
+    public void onResume() {
+        super.onResume();
+        Log.d(TAG,"On resume");
+        adapter.notifyDataSetChanged();
+    }*/
+
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
@@ -98,8 +126,19 @@ public class MealsFragment extends Fragment implements Datable {
             if(resultCode==RESULT_OK){
                 Log.d(TAG, "Result OK");
                 int position = data.getIntExtra(ID_KEY,0);
-                Meal meal = data.getParcelableExtra(MEALNAME);
-                mMeals.set(position,meal);
+                Meal mMeal = data.getParcelableExtra(MEALNAME);
+                Meal meal = Meal.getMeals().get(position);
+                ArrayList<MealProduct> mealProducts = new ArrayList<>();
+                assert mMeal != null;
+                for (MealProduct mMealProduct:mMeal.getMealProducts()
+                     ) {
+                    Product mProduct = mMealProduct.getProduct();
+                    double mWeight = mMealProduct.getWeight();
+                    MealProduct mealProduct = new MealProduct(Product.getProduct(mProduct.getProductName()),mWeight);
+                    mealProducts.add(mealProduct);
+                }
+                meal.setMealProducts(mealProducts);
+                mMeals.set(position, meal);
             }
             else{
                 Log.d(TAG, "Edit canceled");

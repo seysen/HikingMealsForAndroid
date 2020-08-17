@@ -64,6 +64,9 @@ public class ProductDetailActivity extends AppCompatActivity {
         double mProductFat = productFat.getText().toString().equals("")? 0.0: Double.parseDouble(productFat.getText().toString());
         double mProductCarbohydrate = productCarbohydrate.getText().toString().equals("")? 0.0: Double.parseDouble(productCarbohydrate.getText().toString());
         //Product mProduct = new Product(mProductName,mProductEnergy,mProductProtein,mProductFat,mProductCarbohydrate);
+        if (product==null) {
+            product = new Product();
+        }
         product.setProductName(mProductName);
         product.setEnergy(mProductEnergy);
         product.setProtein(mProductProtein);

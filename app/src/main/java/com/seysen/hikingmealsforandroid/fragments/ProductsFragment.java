@@ -87,7 +87,7 @@ public class ProductsFragment extends Fragment implements Datable {
 
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
-        super.onActivityResult(requestCode, resultCode, data);
+        //super.onActivityResult(requestCode, resultCode, data);
         Log.d(TAG,"OnActivityResult");
         if (requestCode==REQUEST_EDIT_TYPE) {
             Log.d(TAG, "Request edit");
@@ -102,7 +102,7 @@ public class ProductsFragment extends Fragment implements Datable {
                 product.setProtein(mProduct.getProtein());
                 product.setCarbohydrate(mProduct.getCarbohydrate());
                 product.setFat(mProduct.getFat());
-                Meal.updateMeals(product);
+                MealsFragment.updateMeals(product);
             }
             else{
                 Log.d(TAG, "Edit canceled");
@@ -115,13 +115,14 @@ public class ProductsFragment extends Fragment implements Datable {
         adapter.notifyDataSetChanged();
     }
 
-    public static void addProduct(Product mProduct) {
-        mProducts.add(mProduct);
+    public static void addProduct() {
+        //int position = mProducts.size();
+        //mProducts.add(position, mProduct);
         Log.d(TAG, "Notify data changed");
         adapter.notifyDataSetChanged();
     }
 
-    public void removeItem (int position) {
+    public void removeItem (int position) {//todo remove all mealProducts with product
         Log.d(TAG, "removeItem");
         mProducts.remove(position);
         adapter.notifyDataSetChanged();

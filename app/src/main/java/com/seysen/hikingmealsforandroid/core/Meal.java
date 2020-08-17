@@ -72,19 +72,6 @@ public class Meal implements Parcelable {
         return result;
     }
 
-    public static void updateMeals(Product product) {
-        for (Meal meal:
-             meals) {
-            for (MealProduct mealProduct:
-            meal.getMealProducts()) {
-                if (mealProduct.getProduct().equals(product)) {
-                    meal.update();
-                    MealsFragment.updateList(meal);
-                }
-            }
-        }
-    }
-
     @Override
     public int describeContents() {
         return 0;
@@ -180,7 +167,7 @@ public class Meal implements Parcelable {
         this.update();
     }
 
-    private void update() {
+    public void update() {
         this.energy = 0;
         this.protein = 0;
         this.fat = 0;
@@ -195,6 +182,14 @@ public class Meal implements Parcelable {
         }
         Log.d(TAG,"Meal name = " + mealName);
         Log.d(TAG,"Meal products = " + mealProducts);
+    }
+
+    public void updateMealProducts() {
+        for (MealProduct mealProduct: mealProducts) {
+            Product product = Product.getProduct(mealProduct.getProductName());
+            mealProduct.setProduct(product);
+        }
+        update();
     }
 
     public void addMealProduct(MealProduct product) {

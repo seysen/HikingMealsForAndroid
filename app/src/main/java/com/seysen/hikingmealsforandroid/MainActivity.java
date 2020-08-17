@@ -124,7 +124,7 @@ public class MainActivity extends AppCompatActivity {
                 break;
             }
             case 1: {
-                if (requestCode == REQUEST_CREATE_TYPE) {
+                if (requestCode == REQUEST_CREATE_TYPE) {//TODO need to fix. does not work
                     Log.d(TAG, "Request create");
                     if (resultCode == 0) {
                         Log.d(TAG, "Result OK");
@@ -139,14 +139,14 @@ public class MainActivity extends AppCompatActivity {
                 }
             }
             case 2: {
-                if (requestCode == REQUEST_CREATE_TYPE) {
+                if (requestCode == REQUEST_CREATE_TYPE) {//TODO need to fix. does not work
                     Log.d(TAG, "Request create");
                     if (resultCode == 0) {
                         Log.d(TAG, "Result OK");
-                        Product mProduct = data.getParcelableExtra(PRODUCTNAME);
+                        //Product mProduct = data.getParcelableExtra(PRODUCTNAME);
                         ProductsFragment productFragment = (ProductsFragment) getSupportFragmentManager().findFragmentById(R.id.fragment_products);
                         assert productFragment != null;
-                        ProductsFragment.addProduct(mProduct);
+                        ProductsFragment.addProduct();
                     } else {
                         Log.d(TAG, "Create canceled");
                     }

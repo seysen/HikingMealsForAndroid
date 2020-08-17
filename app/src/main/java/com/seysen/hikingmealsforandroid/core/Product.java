@@ -7,7 +7,7 @@ import android.support.annotation.Nullable;
 
 import java.util.ArrayList;
 
-//TODO remove duplicate products
+//TODO change logic to implement ID of products
 
 public class Product implements Parcelable {
     private static final String TAG = "Product";
@@ -140,23 +140,16 @@ public class Product implements Parcelable {
         this.carbohydrate = carbohydrate;
     }
 
-    @Override
+    /*@Override
     public boolean equals(@Nullable Object obj) {
-        try {
-            Product product = (Product) obj;
-            if (product.getEnergy()==this.getEnergy()&&
-                    product.getProtein()==this.getProtein()&&
-                    product.getFat()==this.getFat()&&
-                    product.getCarbohydrate()==this.getCarbohydrate()) {
-                return true;
-            } else {
-                return false;
-            }
-        }
-        catch (Exception e) {
+        Product product = (Product) obj;
+        assert product != null;
+        if (this.productID==product.getProductID()) {
+            return true;
+        } else {
             return false;
         }
-    }
+    }*/
 
     @NonNull
     @Override

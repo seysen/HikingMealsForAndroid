@@ -15,6 +15,7 @@ import android.widget.TextView;
 import com.seysen.hikingmealsforandroid.core.Meal;
 import com.seysen.hikingmealsforandroid.core.MealProduct;
 import com.seysen.hikingmealsforandroid.core.Product;
+import com.seysen.hikingmealsforandroid.fragments.MealsFragment;
 import com.seysen.hikingmealsforandroid.helper.CustomDialogFragment;
 import com.seysen.hikingmealsforandroid.helper.Datable;
 import com.seysen.hikingmealsforandroid.helper.MealDetailDialogFragment;
@@ -41,7 +42,6 @@ public class MealDetailActivity extends AppCompatActivity implements Datable {
     private TextView mealFat;
     private TextView mealCarbohydrate;
     private TextView mealWeight;
-    private RecyclerView mealProducts;
     private ArrayList<MealProduct> mProducts = new ArrayList<>();
 
     @Override
@@ -55,7 +55,7 @@ public class MealDetailActivity extends AppCompatActivity implements Datable {
         mealFat = findViewById(R.id.meal_fat_detail);
         mealCarbohydrate = findViewById(R.id.meal_carbohydrate_detail);
         mealWeight = findViewById(R.id.meal_weight_detail);
-        mealProducts = findViewById(R.id.meal_products);
+        RecyclerView mealProducts = findViewById(R.id.meal_products);
         mealProducts.setLayoutManager(new LinearLayoutManager(mealProducts.getContext()));
         adapter = new MealProductAdapter(this,mProducts);
         mealProducts.setAdapter(adapter);
@@ -132,10 +132,16 @@ public class MealDetailActivity extends AppCompatActivity implements Datable {
             if (requestCode == REQUEST_EDIT_TYPE) {
                 Log.d(TAG, "Request edit");
                 Log.d(TAG, "Result OK");
-                int position = Objects.requireNonNull(data).getIntExtra(ID_KEY, 0);
+                int position = data.getIntExtra(ID_KEY,0);
                 MealProduct mProduct = data.getParcelableExtra(PRODUCTNAME);
-                mProducts.set(position, mProduct);
-            } else if (requestCode == REQUEST_CREATE_TYPE) {
+                /*MealProduct mProduct = data.getParcelableExtra(PRODUCTNAME);
+                mProducts.set(position, mProduct);*/
+                MealProduct mealProduct = mProducts.get(position);
+                mealProduct.setProduct(mProduct.getProduct());
+                mealProduct.setWeight(mProduct.getWeight());
+
+
+            } else if (requestCode == REQUEST_CREATE_TYPE) {//TODO need to fix. does not work
                 Log.d(TAG, "Result OK");
                 int position = Objects.requireNonNull(data).getIntExtra(ID_KEY, 0);
                 MealProduct mProduct = data.getParcelableExtra(PRODUCTNAME);
@@ -147,17 +153,19 @@ public class MealDetailActivity extends AppCompatActivity implements Datable {
             }
         }
         Log.d(TAG, "Notify data changed");
-        adapter.notifyDataSetChanged();
         updateMeal();
+        adapter.notifyDataSetChanged();
     }
 
     public void onOKClick (View view) {
         Log.d(TAG, "OK click");
         //<TODO> Add check on empty mane
         String mMealName = mealName.getText().toString();
-        Meal meal = new Meal(mMealName, mProducts);
+        //Meal meal = new Meal(mMealName, mProducts);
+        meal.setMealProducts(mProducts);
         Intent data = new Intent();
         data.putExtra(ID_KEY,position);
+
         data.putExtra(MEALNAME,meal);
         setResult(RESULT_OK,data);
         finish();

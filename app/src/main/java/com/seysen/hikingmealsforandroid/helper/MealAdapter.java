@@ -3,6 +3,7 @@ package com.seysen.hikingmealsforandroid.helper;
 import android.content.Context;
 import android.support.annotation.NonNull;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.util.TypedValue;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -16,10 +17,11 @@ import java.util.ArrayList;
 
 public class MealAdapter extends RecyclerView.Adapter<MealAdapter.MealViewHolder> {
 
+    private static final String TAG = "Meal_Adapter";
     private final TypedValue mTypedValue = new TypedValue();
     private int mBackground;
     private LayoutInflater inflater;
-    private ArrayList<Meal> meals;
+    private static ArrayList<Meal> mMeals;
     private static MealAdapter.ClickListener clickListener;
 
     @NonNull
@@ -32,7 +34,10 @@ public class MealAdapter extends RecyclerView.Adapter<MealAdapter.MealViewHolder
 
     @Override
     public void onBindViewHolder(@NonNull MealViewHolder holder, int position) {
-        Meal meal = meals.get(position);
+        Log.d(TAG,"Meal Adapter onBindViewHolder");
+        Meal meal = mMeals.get(position);
+        Log.d(TAG,"Meal = " + meal + " weight = " + meal.getWeight());
+        Log.d(TAG,"Meal Energy = " + meal.getEnergy());
         holder.nameView.setText(meal.getMealName());
         holder.energyView.setText(String.format("%.1f", + meal.getEnergy()).replace(",", "."));
         holder.proteinView.setText(String.format("%.1f", + meal.getProtein()).replace(",", "."));
@@ -43,13 +48,13 @@ public class MealAdapter extends RecyclerView.Adapter<MealAdapter.MealViewHolder
 
     @Override
     public int getItemCount() {
-        return meals.size();
+        return mMeals.size();
     }
 
     public MealAdapter(Context context, ArrayList<Meal> items) {
         context.getTheme().resolveAttribute(R.attr.selectableItemBackground, mTypedValue, true);
         mBackground = mTypedValue.resourceId;
-        meals = items;
+        mMeals = items;
     }
 
     public static class MealViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener, View.OnLongClickListener {
