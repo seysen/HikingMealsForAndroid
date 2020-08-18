@@ -7,23 +7,16 @@ import android.support.annotation.Nullable;
 
 import java.util.ArrayList;
 
-//TODO change logic to implement ID of products
-
 public class Product implements Parcelable {
     private static final String TAG = "Product";
     private static ArrayList<Product> products = new ArrayList<>();
 
+    private int productID;
     private String productName;//name of the product
     private double energy;//energy per 100 grams
     private double protein;//protein per 100 grams
     private double fat;//fat per 100 grams
     private double carbohydrate;//carbohydrate per 100 grams
-
-    private static final String PRODUCTNAME = "product_name";
-    private static final String PRODUCTENERGY = "product_energy";
-    private static final String PRODUCTPROTEIN = "product_protein";
-    private static final String PRODUCTFAT = "product_fat";
-    private static final String PRODUCTCARBOHYDRATE = "product_carbohydrate";
 
     static {
         Product pasta = new Product("pasta",350,13,1.5,72);
@@ -51,6 +44,7 @@ public class Product implements Parcelable {
     //Constructor
 
     public Product(String productName, double energy, double protein, double fat, double carbohydrate) {
+        setProductID();
         this.productName = productName;
         this.energy = energy;
         this.protein = protein;
@@ -65,6 +59,7 @@ public class Product implements Parcelable {
 
 
     protected Product(Parcel in) {
+        productID = in.readInt();
         productName = in.readString();
         energy = in.readDouble();
         protein = in.readDouble();
@@ -98,6 +93,19 @@ public class Product implements Parcelable {
             }
         }
         return result;
+    }
+
+    public int getProductID() {
+        return productID;
+    }
+
+    private void setProductID() {
+        int maxID=0;
+        for (Product product: products
+             ) {
+            if (product.productID > maxID) maxID = product.productID;
+        }
+        this.productID = maxID + 1;
     }
 
     public String getProductName() {
@@ -140,16 +148,16 @@ public class Product implements Parcelable {
         this.carbohydrate = carbohydrate;
     }
 
-    /*@Override
+    @Override
     public boolean equals(@Nullable Object obj) {
-        Product product = (Product) obj;
-        assert product != null;
-        if (this.productID==product.getProductID()) {
-            return true;
-        } else {
+        assert obj != null;
+        if (obj.getClass()!=Product.class) {
             return false;
+        } else {
+            Product product = (Product) obj;
+            return this.productID == product.getProductID();
         }
-    }*/
+    }
 
     @NonNull
     @Override
@@ -164,6 +172,7 @@ public class Product implements Parcelable {
 
     @Override
     public void writeToParcel(Parcel dest, int flags) {
+        dest.writeInt(productID);
         dest.writeString(productName);
         dest.writeDouble(energy);
         dest.writeDouble(protein);

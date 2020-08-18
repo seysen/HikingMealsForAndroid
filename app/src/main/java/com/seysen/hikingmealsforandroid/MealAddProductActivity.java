@@ -27,6 +27,7 @@ public class MealAddProductActivity extends AppCompatActivity {
     private Spinner spinner;
     private EditText weight;
     private ArrayAdapter<Product> adapter;
+    private ArrayList<Product> products;
     private int position;
     private MealProduct mealProduct;
     private Product product;
@@ -38,7 +39,8 @@ public class MealAddProductActivity extends AppCompatActivity {
         spinner = findViewById(R.id.products);
 
         weight = findViewById(R.id.product_weight);
-        adapter = new ArrayAdapter<>(this,android.R.layout.simple_spinner_item,Product.getProducts());
+        products = Product.getProducts();
+        adapter = new ArrayAdapter<>(this,android.R.layout.simple_spinner_item,products);
         adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         spinner.setAdapter(adapter);
         spinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
@@ -64,7 +66,8 @@ public class MealAddProductActivity extends AppCompatActivity {
             assert mealProduct != null;
             product = mealProduct.getProduct();
             Log.d(TAG,"Product = " + product);
-            spinner.setSelection(Product.getProducts().indexOf(product));//TODO does not work correct
+            int mPosition = products.indexOf(product);
+            spinner.setSelection(mPosition);
             weight.setText(String.valueOf(mealProduct.getWeight()));
         }
     }
@@ -75,7 +78,7 @@ public class MealAddProductActivity extends AppCompatActivity {
             mealProduct = new MealProduct(product, weight.getText().toString().equals("")? 0.0: Double.parseDouble(weight.getText().toString()));
         }
         mealProduct.setProduct(product);
-        Double productWeight = weight.getText().toString().equals("")? 0.0: Double.parseDouble(weight.getText().toString());
+        double productWeight = weight.getText().toString().equals("")? 0.0: Double.parseDouble(weight.getText().toString());
         mealProduct.setWeight(productWeight);
         Intent data = new Intent();
         data.putExtra(ID_KEY,position);
