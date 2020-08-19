@@ -186,7 +186,7 @@ public class Meal implements Parcelable {
 
     public void updateMealProducts() {
         for (MealProduct mealProduct: mealProducts) {
-            Product product = Product.getProduct(mealProduct.getProductName());
+            Product product = Product.getProduct(mealProduct.getProductID());
             mealProduct.setProduct(product);
         }
         update();

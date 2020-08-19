@@ -98,4 +98,8 @@ public class MealProduct implements Parcelable {
         productName = product.getProductName();
         update();
     }
+
+    public int getProductID() {
+        return this.product.getProductID();
+    }
 }

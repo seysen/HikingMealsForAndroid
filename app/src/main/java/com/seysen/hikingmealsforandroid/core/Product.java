@@ -85,6 +85,16 @@ public class Product implements Parcelable {
         return products;
     }
 
+    public static Product getProduct(int ID) {
+        Product result = null;
+        for (Product product: products) {
+            if (product.getProductID()==ID) {
+                result = product;
+            }
+        }
+        return result;
+    }
+
     public static Product getProduct(String name) {
         Product result = null;
         for (Product product: products) {
