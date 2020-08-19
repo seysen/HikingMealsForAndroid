@@ -11,6 +11,7 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.seysen.hikingmealsforandroid.core.Meal;
+import com.seysen.hikingmealsforandroid.core.MealProduct;
 import com.seysen.hikingmealsforandroid.helper.CustomDialogFragment;
 import com.seysen.hikingmealsforandroid.helper.Datable;
 import com.seysen.hikingmealsforandroid.ProductDetailActivity;
@@ -97,6 +98,7 @@ public class ProductsFragment extends Fragment implements Datable {
                 Product mProduct = data.getParcelableExtra(PRODUCTNAME);
                 //mProducts.set(position,mProduct);
                 Product product = mProducts.get(position);
+                assert mProduct != null;
                 product.setProductName(mProduct.getProductName());
                 product.setEnergy(mProduct.getEnergy());
                 product.setProtein(mProduct.getProtein());
@@ -124,6 +126,8 @@ public class ProductsFragment extends Fragment implements Datable {
 
     public void removeItem (int position) {//todo remove all mealProducts with product
         Log.d(TAG, "removeItem");
+        Product product = mProducts.get(position);
+        Meal.removeProduct(product);
         mProducts.remove(position);
         adapter.notifyDataSetChanged();
     }

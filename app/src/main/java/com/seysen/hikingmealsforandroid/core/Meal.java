@@ -7,6 +7,7 @@ import android.util.Log;
 import com.seysen.hikingmealsforandroid.fragments.MealsFragment;
 
 import java.util.ArrayList;
+import java.util.Iterator;
 
 public class Meal implements Parcelable {
     private static final String TAG = "meal_java";
@@ -70,6 +71,21 @@ public class Meal implements Parcelable {
             }
         }
         return result;
+    }
+
+    public static void removeProduct(Product product) {
+        for (Meal meal: meals
+             ) {
+            Iterator<MealProduct> iterator = meal.getMealProducts().iterator();
+            while (iterator.hasNext()) {
+                MealProduct mealProduct = iterator.next();
+                if (mealProduct.getProduct().equals(product)) {
+                    iterator.remove();
+                    meal.update();
+                    MealsFragment.updateList(meal);
+                }
+            }
+        }
     }
 
     @Override
