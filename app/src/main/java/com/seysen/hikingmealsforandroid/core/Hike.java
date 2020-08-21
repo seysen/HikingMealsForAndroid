@@ -1,9 +1,12 @@
 package com.seysen.hikingmealsforandroid.core;
 
+import android.os.Parcel;
+import android.os.Parcelable;
+
 import java.util.ArrayList;
 import java.util.HashMap;
 
-public class Hike {
+public class Hike implements Parcelable {
     //variables
     public static ArrayList<Hike> hikes = new ArrayList<Hike>();
     private String hikeName;
@@ -20,12 +23,30 @@ public class Hike {
             hikeDay.addMeal(Meal.getMeal("pilaf"));
         }
         Hike pvd6 = new Hike("pvd 6 days",2,6);
-        for (HikeDay hikeDay: pvd2.getHikeDays()) {
+        for (HikeDay hikeDay: pvd6.getHikeDays()) {
             hikeDay.addMeal(Meal.getMeal("porridge"));
             hikeDay.addMeal(Meal.getMeal("sandwich"));
             hikeDay.addMeal(Meal.getMeal("pilaf"));
         }
     }
+
+    protected Hike(Parcel in) {
+        hikeName = in.readString();
+        quantity = in.readInt();
+        hikeDays = in.createTypedArrayList(HikeDay.CREATOR);
+    }
+
+    public static final Creator<Hike> CREATOR = new Creator<Hike>() {
+        @Override
+        public Hike createFromParcel(Parcel in) {
+            return new Hike(in);
+        }
+
+        @Override
+        public Hike[] newArray(int size) {
+            return new Hike[size];
+        }
+    };
 
     public int getDuration() {
         return hikeDays.size();
@@ -148,50 +169,30 @@ public class Hike {
         hikes.add(this);
     }
 
+    @Override
+    public int describeContents() {
+        return 0;
+    }
+
+    @Override
+    public void writeToParcel(Parcel dest, int flags) {
+        dest.writeString(hikeName);
+        dest.writeInt(quantity);
+        dest.writeTypedList(hikeDays);
+    }
+
+    public double getWeight() {
+        double weight = 0;
+        for (HikeDay day: hikeDays
+             ) {
+            weight += day.getDayWeight();
+        }
+        return weight;
+    }
+
     //TODO getHikeWeight
     /*public Double getWeight() {
         return weight;
     }*/
 
-    public class HikeDay {
-        //variables
-        private ArrayList<Meal> meals = new ArrayList<Meal>();
-
-        //methods
-        public void addMeal(Meal meal) {
-            if (meal!=null) {
-                meals.add(meal);
-            }
-        }
-
-        public void removeMeal(int index) {
-            meals.remove(index);
-        }
-
-        public void setMeals(ArrayList<Meal> meals) {
-            this.meals = meals;
-        }
-
-        public ArrayList<Meal> getMeals() {
-            return meals;
-        }
-
-        public double getHikeDayEnergy() {
-            double energy = 0;
-            for (Meal meal : meals) {
-                energy += meal.getEnergy();
-            }
-            return energy;
-        }
-
-        //constructors
-
-        public HikeDay() {
-
-        }
-
-        public HikeDay(ArrayList<Meal> meals) {
-            this.meals = meals;
-        }
-    }
 }

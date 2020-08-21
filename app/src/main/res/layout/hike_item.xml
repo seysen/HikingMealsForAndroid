@@ -51,7 +51,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="4dp"
-        android:text="gramms of meals/for person"
+        android:text="gramms /per person"
         app:layout_constraintBaseline_toBaselineOf="@+id/hike_weight"
         app:layout_constraintStart_toEndOf="@id/person_weight" />
 
@@ -75,12 +75,15 @@
 
     <TextView
         android:id="@+id/hike_quantity"
-        android:layout_width="wrap_content"
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
+        android:layout_marginStart="4dp"
         android:layout_marginEnd="4dp"
+        android:gravity="end"
         android:text="2"
         app:layout_constraintBaseline_toBaselineOf="@+id/textView13"
-        app:layout_constraintEnd_toStartOf="@+id/textView17" />
+        app:layout_constraintEnd_toStartOf="@+id/textView17"
+        app:layout_constraintStart_toEndOf="@+id/textView13" />
 
     <TextView
         android:id="@+id/textView17"

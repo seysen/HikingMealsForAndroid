@@ -1,13 +1,17 @@
 package com.seysen.hikingmealsforandroid.fragments;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import com.seysen.hikingmealsforandroid.HikeDetailActivity;
+import com.seysen.hikingmealsforandroid.MealDetailActivity;
 import com.seysen.hikingmealsforandroid.R;
 import com.seysen.hikingmealsforandroid.core.Hike;
 import com.seysen.hikingmealsforandroid.helper.HikeAdapter;
@@ -19,6 +23,7 @@ public class HikesFragment extends Fragment {
 
     public static final String ID_KEY = "hike_id";
     private static final String TAG = "hikes_fragment";
+    private static final String HIKENAME = "hike";
     private static HikeAdapter adapter;
     private RecyclerView hikeList;
     private static final int RESULT_OK = 0;
@@ -47,7 +52,12 @@ public class HikesFragment extends Fragment {
         adapter.setOnItemClickListener(new HikeAdapter.ClickListener() {
             @Override
             public void onItemClick(int position, View v) {
-
+                Log.d(TAG, "onItemClick position: " + position);
+                Intent intent = new Intent(v.getContext(), HikeDetailActivity.class);
+                intent.putExtra(ID_KEY, position);
+                intent.putExtra(HIKENAME, mHikes.get(position));
+                //Log.d(TAG, "Extras = " + String.valueOf(intent.getExtras()));
+                startActivityForResult(intent, REQUEST_EDIT_TYPE);
             }
 
             @Override
