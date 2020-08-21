@@ -36,8 +36,8 @@ public class HikeAdapter extends RecyclerView.Adapter<HikeAdapter.HikeViewHolder
         hikeViewHolder.hikeView.setText(hike.getHikeName());
         hikeViewHolder.durationView.setText(String.format("%d", + hike.getDuration()).replace(",", "."));
         hikeViewHolder.quantityView.setText(String.format("%d", + hike.getQuantity()).replace(",", "."));
-        //hikeViewHolder.weightView.setText(hike.getWeight());
-        //hikeViewHolder.personWeightView.setText(hike.getWeight()/hike.getQuantity());
+        hikeViewHolder.weightView.setText(String.format("%.1f", + hike.getWeight()).replace(",", "."));
+        hikeViewHolder.personWeightView.setText(String.format("%.1f", + hike.getWeight()/hike.getQuantity()).replace(",", "."));
     }
 
     @Override
