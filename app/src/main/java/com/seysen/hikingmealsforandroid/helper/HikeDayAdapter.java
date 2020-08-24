@@ -17,6 +17,7 @@ import java.util.ArrayList;
 
 public class HikeDayAdapter extends RecyclerView.Adapter<HikeDayAdapter.HikeDayViewHolder> {
     private final static String TAG = "hike_day_adapter";
+    private static ClickListener clickListener;
     private final TypedValue mTypedValue = new TypedValue();
     private int mBackground;
     private LayoutInflater inflater;
@@ -51,7 +52,7 @@ public class HikeDayAdapter extends RecyclerView.Adapter<HikeDayAdapter.HikeDayV
         mHikeDays = items;
     }
 
-    public static class HikeDayViewHolder extends RecyclerView.ViewHolder {
+    public static class HikeDayViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
 
         private final TextView hikeDayNumberView;
         private final TextView hikeDayMealsView;
@@ -64,6 +65,20 @@ public class HikeDayAdapter extends RecyclerView.Adapter<HikeDayAdapter.HikeDayV
             hikeDayMealsView = itemView.findViewById(R.id.nomber_of_meals);
             hikeDayWeight = itemView.findViewById(R.id.day_weight);
             hikeDayEnergy = itemView.findViewById(R.id.day_energy);
+            itemView.setOnClickListener(this);
         }
+
+        @Override
+        public void onClick(View v) {
+            clickListener.onItemClick(getAdapterPosition(),v);
+        }
+    }
+
+    public void setOnItemClickListener(HikeDayAdapter.ClickListener clickListener) {
+        HikeDayAdapter.clickListener = clickListener;
+    }
+
+    public interface ClickListener {
+        void onItemClick(int position, View v);
     }
 }

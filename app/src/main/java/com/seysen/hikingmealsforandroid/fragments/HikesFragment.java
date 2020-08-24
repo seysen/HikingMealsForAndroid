@@ -11,7 +11,6 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.seysen.hikingmealsforandroid.HikeDetailActivity;
-import com.seysen.hikingmealsforandroid.MealDetailActivity;
 import com.seysen.hikingmealsforandroid.R;
 import com.seysen.hikingmealsforandroid.core.Hike;
 import com.seysen.hikingmealsforandroid.helper.HikeAdapter;
@@ -44,7 +43,6 @@ public class HikesFragment extends Fragment {
         View view = inflater.inflate(R.layout.fragment_hikes, container, false);
         hikeList = view.findViewById(R.id.hikes);
         hikeList.setLayoutManager(new LinearLayoutManager(hikeList.getContext()));
-        //initHikes();
         mHikes = Hike.getHikes();
         adapter = new HikeAdapter(Objects.requireNonNull(getActivity()),mHikes);
         hikeList.setAdapter(adapter);
@@ -69,7 +67,21 @@ public class HikesFragment extends Fragment {
         return view;
     }
 
-    private void initHikes() {
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if (resultCode==RESULT_OK) {
+            switch (requestCode) {
+                case REQUEST_CREATE_TYPE: {
 
+                }
+                case REQUEST_EDIT_TYPE: {
+                    int position = data.getIntExtra(ID_KEY,0);
+                    Hike hike = data.getParcelableExtra(HIKENAME);
+                    mHikes.set(position,hike);
+                }
+            }
+            adapter.notifyDataSetChanged();
+        }
     }
 }

@@ -10,7 +10,8 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".HikeDetailActivity"></activity>
+        <activity android:name=".DayDetailActivity"/>
+        <activity android:name=".HikeDetailActivity" />
         <activity android:name=".MealAddProductActivity" />
         <activity android:name=".MealDetailActivity" />
         <activity android:name=".ProductDetailActivity" />
