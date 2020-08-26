@@ -16,12 +16,11 @@ import com.seysen.hikingmealsforandroid.core.Product;
 
 import java.util.ArrayList;
 
-import static com.seysen.hikingmealsforandroid.MealDetailActivity.ID_KEY;
-import static com.seysen.hikingmealsforandroid.MealDetailActivity.PRODUCTNAME;
-
 public class MealAddProductActivity extends AppCompatActivity {
 
     private static final String TAG = "AddProduct";
+    public static final String ID_KEY = "meal_id";
+    public static final String PRODUCTNAME = "product";
     private static final int RESULT_OK = 0;
     private static final int RESULT_CANCELED = 1;
     private Spinner spinner;
@@ -29,7 +28,7 @@ public class MealAddProductActivity extends AppCompatActivity {
     private ArrayAdapter<Product> adapter;
     private ArrayList<Product> products;
     private int position;
-    private MealProduct mealProduct;
+    private MealProduct mealProduct = null;
     private Product product;
 
     @Override
@@ -76,10 +75,11 @@ public class MealAddProductActivity extends AppCompatActivity {
         Log.d(TAG, "OK click");
         if (mealProduct==null) {
             mealProduct = new MealProduct(product, weight.getText().toString().equals("")? 0.0: Double.parseDouble(weight.getText().toString()));
+        } else {
+            mealProduct.setProduct(product);
+            double productWeight = weight.getText().toString().equals("") ? 0.0 : Double.parseDouble(weight.getText().toString());
+            mealProduct.setWeight(productWeight);
         }
-        mealProduct.setProduct(product);
-        double productWeight = weight.getText().toString().equals("")? 0.0: Double.parseDouble(weight.getText().toString());
-        mealProduct.setWeight(productWeight);
         Intent data = new Intent();
         data.putExtra(ID_KEY,position);
         data.putExtra(PRODUCTNAME,mealProduct);

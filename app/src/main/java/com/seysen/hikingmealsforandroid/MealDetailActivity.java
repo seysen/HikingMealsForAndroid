@@ -43,6 +43,7 @@ public class MealDetailActivity extends AppCompatActivity implements Datable {
     private TextView mealCarbohydrate;
     private TextView mealWeight;
     private ArrayList<MealProduct> mProducts = new ArrayList<>();
+    private int requestCode;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -132,18 +133,21 @@ public class MealDetailActivity extends AppCompatActivity implements Datable {
             if (requestCode == REQUEST_EDIT_TYPE) {
                 Log.d(TAG, "Request edit");
                 Log.d(TAG, "Result OK");
+                assert data != null;
                 int position = data.getIntExtra(ID_KEY,0);
                 MealProduct mProduct = data.getParcelableExtra(PRODUCTNAME);
                 /*MealProduct mProduct = data.getParcelableExtra(PRODUCTNAME);
                 mProducts.set(position, mProduct);*/
                 MealProduct mealProduct = mProducts.get(position);
+                assert mProduct != null;
                 mealProduct.setProduct(mProduct.getProduct());
                 mealProduct.setWeight(mProduct.getWeight());
 
 
-            } else if (requestCode == REQUEST_CREATE_TYPE) {//TODO need to fix. does not work
+            } else if (requestCode == REQUEST_CREATE_TYPE) {
                 Log.d(TAG, "Result OK");
-                int position = Objects.requireNonNull(data).getIntExtra(ID_KEY, 0);
+                assert data != null;
+                int position = data.getIntExtra(ID_KEY, 0);
                 MealProduct mProduct = data.getParcelableExtra(PRODUCTNAME);
                 mProducts.add(mProduct);
             }
@@ -159,13 +163,13 @@ public class MealDetailActivity extends AppCompatActivity implements Datable {
 
     public void onOKClick (View view) {
         Log.d(TAG, "OK click");
-        //<TODO> Add check on empty mane
-        String mMealName = mealName.getText().toString();
-        //Meal meal = new Meal(mMealName, mProducts);
+        //<TODO> Add check on empty name
+        if (meal==null) {
+            meal = new Meal(mealName.getText().toString(), mProducts);
+        }
         meal.setMealProducts(mProducts);
         Intent data = new Intent();
         data.putExtra(ID_KEY,position);
-
         data.putExtra(MEALNAME,meal);
         setResult(RESULT_OK,data);
         finish();
@@ -178,6 +182,9 @@ public class MealDetailActivity extends AppCompatActivity implements Datable {
     }
 
     public void updateMeal() {
+        if (meal==null) {
+            meal = new Meal(mealName.getText().toString(), mProducts);
+        }
         meal.setMealProducts(mProducts);
         mealEnergy.setText(String.format("%.1f", + meal.getEnergy()).replace(",", "."));
         mealProtein.setText(String.format("%.1f", + meal.getProtein()).replace(",", "."));

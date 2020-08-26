@@ -1,6 +1,10 @@
 package com.seysen.hikingmealsforandroid;
 
+import android.content.DialogInterface;
 import android.content.Intent;
+import android.support.design.widget.FloatingActionButton;
+import android.support.v4.app.DialogFragment;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
@@ -10,13 +14,14 @@ import android.widget.TextView;
 
 import com.seysen.hikingmealsforandroid.core.HikeDay;
 import com.seysen.hikingmealsforandroid.core.Meal;
+import com.seysen.hikingmealsforandroid.helper.AddMealDialogFragment;
 import com.seysen.hikingmealsforandroid.helper.Datable;
 import com.seysen.hikingmealsforandroid.helper.DayMealsAdapter;
 import com.seysen.hikingmealsforandroid.helper.MealDetailDialogFragment;
 
 import java.util.ArrayList;
 
-public class DayDetailActivity extends AppCompatActivity implements Datable {
+public class DayDetailActivity extends AppCompatActivity implements Datable, AddMealDialogFragment.MealReturnDialogListener {
 
     private static final String TAG = "day_detail";
     public static final String ID_KEY = "hike_id";
@@ -62,14 +67,14 @@ public class DayDetailActivity extends AppCompatActivity implements Datable {
             }
         });
 
-        /*final FloatingActionButton fab = findViewById(R.id.day_detail_fab);
+        final FloatingActionButton fab = findViewById(R.id.day_detail_fab);
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(v.getContext(),DayDetailActivity.class);
-                startActivityForResult(intent,REQUEST_CREATE_TYPE);
+                AddMealDialogFragment dialogFragment = new AddMealDialogFragment();
+                dialogFragment.show(getSupportFragmentManager(),"custom");
             }
-        });*/
+        });
 
         Bundle arguments = getIntent().getExtras();
         if (arguments!=null) {
@@ -112,5 +117,12 @@ public class DayDetailActivity extends AppCompatActivity implements Datable {
         dayWeight.setText(String.format("%.1f", + hikeDay.getDayWeight()).replace(",", "."));
         dayCalories.setText(String.format("%.1f", + hikeDay.getHikeDayEnergy()).replace(",", "."));
         adapter.notifyDataSetChanged();
+    }
+
+    @Override
+    public void onDialogItemPick(Meal meal) {
+        meals.add(meal);
+        adapter.notifyItemInserted(meals.size()-1);
+        updateHikeDay();
     }
 }
