@@ -6,43 +6,6 @@
     android:layout_height="match_parent"
     tools:context=".HikeDetailActivity">
 
-    <TextView
-        android:id="@+id/duaration"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="4dp"
-        android:layout_marginTop="4dp"
-        android:text="2"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/hike_name_detail" />
-
-    <TextView
-        android:id="@+id/textView15"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="8dp"
-        android:text="days"
-        app:layout_constraintBaseline_toBaselineOf="@+id/duaration"
-        app:layout_constraintStart_toEndOf="@+id/duaration" />
-
-    <TextView
-        android:id="@+id/quantity"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="8dp"
-        android:text="2"
-        app:layout_constraintBaseline_toBaselineOf="@+id/textView15"
-        app:layout_constraintStart_toEndOf="@+id/textView15" />
-
-    <TextView
-        android:id="@+id/textView18"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="8dp"
-        android:text="persons"
-        app:layout_constraintBaseline_toBaselineOf="@+id/quantity"
-        app:layout_constraintStart_toEndOf="@+id/quantity" />
-
     <android.support.v7.widget.RecyclerView
         android:id="@+id/hike_days"
         android:layout_width="0dp"
@@ -73,10 +36,10 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="4dp"
-        android:layout_marginTop="4dp"
+        android:layout_marginTop="8dp"
         android:text="10000"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/duaration" />
+        app:layout_constraintTop_toBottomOf="@+id/day_btn" />
 
     <TextView
         android:id="@+id/textView12"
@@ -141,5 +104,27 @@
         android:text="@android:string/cancel"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toEndOf="@+id/hike_detail_ok" />
+
+    <Button
+        android:id="@+id/day_btn"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="8dp"
+        android:onClick="onDayClick"
+        android:text="2 days"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/hike_name_detail" />
+
+    <Button
+        android:id="@+id/persons_btn"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
+        android:layout_marginEnd="8dp"
+        android:onClick="onPersonsClick"
+        android:text="2 persons"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/hike_name_detail" />
 
 </android.support.constraint.ConstraintLayout>

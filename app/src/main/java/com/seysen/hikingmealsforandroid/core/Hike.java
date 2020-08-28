@@ -8,11 +8,11 @@ import java.util.HashMap;
 
 public class Hike implements Parcelable {
     //variables
-    public static ArrayList<Hike> hikes = new ArrayList<Hike>();
+    public static ArrayList<Hike> hikes = new ArrayList<>();
     private String hikeName;
     private int quantity;
-    private ArrayList<HikeDay> hikeDays = new ArrayList<HikeDay>();
-    private HashMap<Product,Double> shippingChart = new HashMap<Product,Double>();
+    private ArrayList<HikeDay> hikeDays = new ArrayList<>();
+    private HashMap<Product,Double> shippingChart = new HashMap<>();
     //methods
 
     static {
@@ -51,20 +51,23 @@ public class Hike implements Parcelable {
     public int getDuration() {
         return hikeDays.size();
     }
+
     public int getQuantity() {
         return quantity;
     }
+
     public void setDuration (int duration) {
         if (hikeDays.size()>duration) {
-            while (hikeDays.size()!=duration) {
+            for (; duration <hikeDays.size(); ) {
                 hikeDays.remove(duration);
             }
         } else if (hikeDays.size()<duration) {
-            while (hikeDays.size()!=duration) {
+            for (int i = hikeDays.size(); i<duration; i++){
                 hikeDays.add(new HikeDay());
             }
         }
     }
+
     public void setQuantity (int quantity) {
         this.quantity = quantity;
     }
@@ -189,10 +192,5 @@ public class Hike implements Parcelable {
         }
         return weight;
     }
-
-    //TODO getHikeWeight
-    /*public Double getWeight() {
-        return weight;
-    }*/
 
 }
