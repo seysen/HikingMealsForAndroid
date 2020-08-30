@@ -142,27 +142,34 @@ public class Hike implements Parcelable {
 
     //constructors
 
+    public Hike() {
+        this.hikeName = "";
+        this.quantity = 1;
+        hikeDays.add(new HikeDay());
+        hikes.add(this);
+    }
+
     public Hike(String hikeName) {
         this.hikeName = hikeName;
-        this.quantity = 0;
-        hikes.add(this);
+        this.quantity = 1;
         hikeDays.add(new HikeDay());
+        hikes.add(this);
     }
 
     public Hike(String hikeName, int quantity) {
         this.hikeName = hikeName;
         this.quantity = quantity;
-        hikes.add(this);
         hikeDays.add(new HikeDay());
+        hikes.add(this);
     }
 
     public Hike(String hikeName, int quantity, int duration) {
         this.hikeName = hikeName;
         this.quantity = quantity;
-        hikes.add(this);
         for (int i=0;i<duration;i++) {
             hikeDays.add(new HikeDay());
         }
+        hikes.add(this);
     }
 
     public Hike(String hikeName, int quantity, ArrayList<HikeDay> hikeDays) {
@@ -193,4 +200,7 @@ public class Hike implements Parcelable {
         return weight;
     }
 
+    public void remove() {
+        hikes.remove(this);
+    }
 }

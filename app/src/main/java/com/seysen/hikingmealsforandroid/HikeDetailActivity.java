@@ -65,7 +65,9 @@ public class HikeDetailActivity extends AppCompatActivity implements Datable, Se
             Log.d(TAG,"Position = " + position);
             hike = arguments.getParcelable(HIKENAME);
             Log.d(TAG,String.valueOf(hike));
-
+        }
+        if (hike==null) {
+            hike = new Hike();
         }
         hikeDaysList = hike.getHikeDays();
         adapter = new HikeDayAdapter(this, hikeDaysList);
@@ -80,7 +82,7 @@ public class HikeDetailActivity extends AppCompatActivity implements Datable, Se
             }
         });
 
-        if (arguments!=null) {
+        //if (arguments!=null) {
             hike_name.setText(hike.getHikeName());
             duration.setText(String.format("%d days", hike.getDuration()));
             quantity.setText(String.format("%d persons", hike.getQuantity()));
@@ -89,7 +91,7 @@ public class HikeDetailActivity extends AppCompatActivity implements Datable, Se
             Log.d(TAG,"notifyDataSetChanged");
             hikeDaysList=hike.getHikeDays();
             adapter.notifyDataSetChanged();
-        }
+        //}
     }
 
     @Override
@@ -114,6 +116,8 @@ public class HikeDetailActivity extends AppCompatActivity implements Datable, Se
     }
 
     public void onOKClick (View view) {
+        hike.setHikeName(hike_name.getText().toString());
+        hike.setHikeDays(hikeDaysList);
         Intent data = new Intent();
         data.putExtra(ID_KEY, position);
         data.putExtra(HIKENAME,hike);
@@ -122,6 +126,7 @@ public class HikeDetailActivity extends AppCompatActivity implements Datable, Se
     }
 
     public void onCancelClick (View view) {
+        hike.remove();
         setResult(RESULT_CANCELED);
         finish();
     }

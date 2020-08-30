@@ -151,8 +151,8 @@ public class MealsFragment extends Fragment implements Datable {
         adapter.notifyDataSetChanged();
     }
 
-    public static void addMeal(Meal mMeal) {
-        mMeals.add(mMeal);
+    public static void addMeal() {
+        //mMeals.add(mMeal);
         Log.d(TAG, "Notify data changed");
         adapter.notifyDataSetChanged();
     }

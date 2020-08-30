@@ -31,16 +31,16 @@ public class Meal implements Parcelable {
         pilaf.addMealProduct(new MealProduct(Product.getProduct("garlic"),2.5));
         pilaf.addMealProduct(new MealProduct(Product.getProduct("mayonnaise"),10));
         pilaf.addMealProduct(new MealProduct(Product.getProduct("ketchup"), 10));
-        meals.add(pilaf);
+        //meals.add(pilaf);
         Meal porridge = new Meal("porridge");
         porridge.addMealProduct(new MealProduct(Product.getProduct("cereals"),70));
         porridge.addMealProduct(new MealProduct(Product.getProduct("milk"), 25));
         porridge.addMealProduct(new MealProduct(Product.getProduct("jam"),10));
-        meals.add(porridge);
+        //meals.add(porridge);
         Meal sandwich = new Meal("sandwich");
         sandwich.addMealProduct(new MealProduct(Product.getProduct("bread"),50));
         sandwich.addMealProduct(new MealProduct(Product.getProduct("sausage"),80));
-        meals.add(sandwich);
+        //meals.add(sandwich);
     }
 
     //Constructors
@@ -49,6 +49,7 @@ public class Meal implements Parcelable {
         this.mealName = mealName;
         this.mealProducts = mealProducts;
         this.update();
+        meals.add(this);
     }
 
     public Meal(String mealName) {

@@ -35,6 +35,10 @@ public class HikesFragment extends Fragment {
         // Required empty public constructor
     }
 
+    public static void addHike() {
+        adapter.notifyDataSetChanged();
+    }
+
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,

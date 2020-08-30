@@ -66,6 +66,8 @@ public class MainActivity extends AppCompatActivity {
                     case 0: {
                         Log.d(TAG, "onPageSelected1");
                         fab.hide();
+                        fab.setImageResource(android.R.drawable.ic_menu_add);
+                        fab.show();
                         break;
                     }
                     case 1: {
@@ -99,6 +101,7 @@ public class MainActivity extends AppCompatActivity {
                 Intent intent = null;
                 switch (tabLayout.getSelectedTabPosition()) {
                     case 0: {
+                        intent = new Intent(v.getContext(), HikeDetailActivity.class);
                         break;
                     }
                     case 1: {
@@ -121,17 +124,29 @@ public class MainActivity extends AppCompatActivity {
         Log.d(TAG, "onActivityResult");
         switch (tabLayout.getSelectedTabPosition()) {
             case 0: {
-                break;
-            }
-            case 1: {
-                if (requestCode == REQUEST_CREATE_TYPE) {//TODO need to fix. does not work
+                if (requestCode == REQUEST_CREATE_TYPE) {
                     Log.d(TAG, "Request create");
                     if (resultCode == 0) {
                         Log.d(TAG, "Result OK");
-                        Meal mMeal = data.getParcelableExtra(MEALNAME);
+                        HikesFragment hikesFragment = (HikesFragment) getSupportFragmentManager().findFragmentById(R.id.fragment_hikes);
+                        assert hikesFragment != null;
+                        HikesFragment.addHike();
+                    } else {
+                        Log.d(TAG, "Create canceled");
+                    }
+                    break;
+                }
+                break;
+            }
+            case 1: {
+                if (requestCode == REQUEST_CREATE_TYPE) {
+                    Log.d(TAG, "Request create");
+                    if (resultCode == 0) {
+                        Log.d(TAG, "Result OK");
+                        //Meal mMeal = data.getParcelableExtra(MEALNAME);
                         MealsFragment mealsFragment = (MealsFragment) getSupportFragmentManager().findFragmentById(R.id.fragment_meals);
                         assert mealsFragment != null;
-                        MealsFragment.addMeal(mMeal);
+                        MealsFragment.addMeal();
                     } else {
                         Log.d(TAG, "Create canceled");
                     }
@@ -139,7 +154,7 @@ public class MainActivity extends AppCompatActivity {
                 }
             }
             case 2: {
-                if (requestCode == REQUEST_CREATE_TYPE) {//TODO need to fix. does not work
+                if (requestCode == REQUEST_CREATE_TYPE) {
                     Log.d(TAG, "Request create");
                     if (resultCode == 0) {
                         Log.d(TAG, "Result OK");
