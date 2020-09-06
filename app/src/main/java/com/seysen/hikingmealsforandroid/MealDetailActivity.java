@@ -167,6 +167,7 @@ public class MealDetailActivity extends AppCompatActivity implements Datable {
         if (meal==null) {
             meal = new Meal(mealName.getText().toString(), mProducts);
         }
+        meal.setMealName(mealName.getText().toString());
         meal.setMealProducts(mProducts);
         Intent data = new Intent();
         data.putExtra(ID_KEY,position);

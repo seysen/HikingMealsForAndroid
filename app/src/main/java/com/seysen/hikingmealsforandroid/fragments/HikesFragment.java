@@ -13,12 +13,14 @@ import android.view.ViewGroup;
 import com.seysen.hikingmealsforandroid.HikeDetailActivity;
 import com.seysen.hikingmealsforandroid.R;
 import com.seysen.hikingmealsforandroid.core.Hike;
+import com.seysen.hikingmealsforandroid.helper.CustomDialogFragment;
+import com.seysen.hikingmealsforandroid.helper.Datable;
 import com.seysen.hikingmealsforandroid.helper.HikeAdapter;
 
 import java.util.ArrayList;
 import java.util.Objects;
 
-public class HikesFragment extends Fragment {
+public class HikesFragment extends Fragment implements Datable {
 
     public static final String ID_KEY = "hike_id";
     private static final String TAG = "hikes_fragment";
@@ -63,8 +65,16 @@ public class HikesFragment extends Fragment {
             }
 
             @Override
-            public void onItemLongClick(int position, View v) {
-
+            public void onItemLongClick(int position, View v) {Log.d(TAG, "onItemLongClick pos = " + position);
+                String hikeName = mHikes.get(position).getHikeName();
+                CustomDialogFragment dialog = new CustomDialogFragment();
+                Bundle args = new Bundle();
+                args.putString("item","hike");
+                args.putString("name", hikeName);
+                args.putInt("position", position);
+                dialog.setArguments(args);
+                assert getFragmentManager() != null;
+                dialog.show(getFragmentManager(),"custom");
             }
         });
 
@@ -87,5 +97,12 @@ public class HikesFragment extends Fragment {
             }
             adapter.notifyDataSetChanged();
         }
+    }
+
+    @Override
+    public void removeItem(int position) {
+        Log.d(TAG, "removeItem");
+        mHikes.remove(position);
+        adapter.notifyItemRemoved(position);
     }
 }

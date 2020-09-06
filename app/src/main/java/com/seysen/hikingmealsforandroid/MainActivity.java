@@ -36,7 +36,7 @@ public class MainActivity extends AppCompatActivity {
     private Adapter adapter = null;
     private ViewPager viewPager = null;
     private TabLayout tabLayout = null;
-    private Fragment activeFragment = null;
+    private static Fragment activeFragment = null;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -62,7 +62,7 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onPageSelected(int i) {
                 activeFragment = adapter.getRegisteredFragment(i);
-                switch (i) {
+                /*switch (i) {
                     case 0: {
                         Log.d(TAG, "onPageSelected1");
                         fab.hide();
@@ -84,7 +84,7 @@ public class MainActivity extends AppCompatActivity {
                         fab.show();
                         break;
                     }
-                }
+                }*/
             }
 
             @Override
@@ -179,7 +179,7 @@ public class MainActivity extends AppCompatActivity {
         viewPager.setAdapter(adapter);
     }
 
-    public Fragment getActiveFragment() {
+    public static Fragment getActiveFragment() {
         return activeFragment;
     }
 

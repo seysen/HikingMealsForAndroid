@@ -1,5 +1,6 @@
 package com.seysen.hikingmealsforandroid.helper;
 
+import android.app.Activity;
 import android.app.AlertDialog;
 import android.app.Dialog;
 import android.content.Context;
@@ -26,7 +27,7 @@ public class CustomDialogFragment extends DialogFragment {
     public void onAttach(@NonNull Context context) {
         super.onAttach(context);
         Log.d(TAG, "onAttach");
-        fragment = ((MainActivity) Objects.requireNonNull(getActivity())).getActiveFragment();
+        fragment = MainActivity.getActiveFragment();
         datable = (Datable) fragment;
     }
 
@@ -46,7 +47,9 @@ public class CustomDialogFragment extends DialogFragment {
                 .setPositiveButton("OK", new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
-                        datable.removeItem(position);
+                        if (datable!=null) {
+                            datable.removeItem(position);
+                        }
                     }
                 })
                 .setNegativeButton("Cancel",null)

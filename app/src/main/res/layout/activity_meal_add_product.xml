@@ -32,8 +32,8 @@
                 android:layout_height="wrap_content"
                 android:layout_gravity="center|end"
                 android:layout_weight="1"
-                android:autoText="false"
                 android:ems="10"
+                android:hint="0"
                 android:inputType="numberDecimal"
                 android:padding="8dp"
                 android:textAlignment="textEnd" />

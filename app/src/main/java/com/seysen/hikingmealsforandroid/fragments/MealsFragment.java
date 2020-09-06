@@ -137,6 +137,7 @@ public class MealsFragment extends Fragment implements Datable {
                     MealProduct mealProduct = new MealProduct(Product.getProduct(mProduct.getProductName()),mWeight);
                     mealProducts.add(mealProduct);
                 }
+                meal.setMealName(mMeal.getMealName());
                 meal.setMealProducts(mealProducts);
                 mMeals.set(position, meal);
             }
