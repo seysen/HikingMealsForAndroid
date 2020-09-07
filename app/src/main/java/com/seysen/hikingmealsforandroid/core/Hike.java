@@ -4,7 +4,6 @@ import android.os.Parcel;
 import android.os.Parcelable;
 
 import java.util.ArrayList;
-import java.util.HashMap;
 
 public class Hike implements Parcelable {
     //variables
@@ -12,7 +11,8 @@ public class Hike implements Parcelable {
     private String hikeName;
     private int quantity;
     private ArrayList<HikeDay> hikeDays = new ArrayList<>();
-    private HashMap<Product,Double> shippingChart = new HashMap<>();
+    //private HashMap<String,Double> shippingChart = new HashMap<>();
+    private ArrayList<MealProduct> shoppingList = new ArrayList<>();
     //methods
 
     static {
@@ -112,29 +112,57 @@ public class Hike implements Parcelable {
     public void removeDay(int index) {
         hikeDays.remove(index-1);
     }
-    public HashMap<Product,Double> getShippingChart() {
-        return shippingChart;
+    public ArrayList<MealProduct> getShoppingList() {
+        return shoppingList;
     }
-    /*public void generateShippingChart() {
-        HashMap<Product,Double> chart = new HashMap<Product, Double>();
-        for (HikeDay hikeDay:hikeDays
+
+    /*public void generateShoppingList() {
+        HashMap<String, Double> chart = new HashMap<String, Double>();
+        for (HikeDay hikeDay : hikeDays
         ) {
-            for (Meal meal:hikeDay.getMeals()
+            for (Meal meal : hikeDay.getMeals()
             ) {
-                for (HashMap.Entry<Product, Double> pair : meal.getMealProducts().entrySet()
+                for (MealProduct mProduct: meal.getMealProducts()
                 ) {
-                    Product product = pair.getKey();
-                    double weight = pair.getValue();
-                    if (chart.keySet().contains(product)) {
-                        chart.put(product,chart.get(product)+weight*Hike.this.getQuantity());
+                    Product product = mProduct.getProduct();
+                    double weight = mProduct.getWeight();
+                    if (chart.keySet().contains(product.getProductName())) {
+                        chart.put(product.getProductName(), chart.get(product.getProductName()) + weight * this.getQuantity());
                     } else {
-                        chart.put(product,weight*Hike.this.getQuantity());
+                        chart.put(product.getProductName(), weight * this.getQuantity());
                     }
                 }
             }
         }
         shippingChart = chart;
     }*/
+
+    public void generateShoppingList() {
+        this.shoppingList.clear();
+        for (HikeDay hikeDay: hikeDays
+             ) {
+            ArrayList<Meal> meals = hikeDay.getMeals();
+            for (Meal meal:meals
+                 ) {
+                ArrayList<MealProduct> mealProducts = meal.getMealProducts();
+                for (MealProduct mProduct: mealProducts
+                     ) {
+                    if (this.shoppingList.contains(mProduct)) {
+                        for (MealProduct product:this.shoppingList
+                        ) {
+                            if (product.equals(mProduct)) {
+                                double weight = product.getWeight();
+                                product.setWeight(weight+mProduct.getWeight()*quantity);
+                            }
+                        }
+                    } else {
+                        this.shoppingList.add(new MealProduct(mProduct.getProduct(),mProduct.getWeight()*quantity));
+                    }
+                }
+            }
+        }
+    }
+
     @Override
     public String toString() {
         return this.hikeName;

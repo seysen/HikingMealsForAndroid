@@ -64,6 +64,7 @@
         android:layout_marginStart="4dp"
         android:layout_marginTop="4dp"
         android:layout_marginEnd="4dp"
+        android:autoText="false"
         android:ems="10"
         android:hint="Type name of the hike"
         android:inputType="textPersonName"
@@ -88,10 +89,12 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="16dp"
+        android:layout_marginEnd="16dp"
         android:layout_marginBottom="16dp"
         android:onClick="onCancelClick"
         android:text="@android:string/cancel"
         app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toStartOf="@+id/shopping_btn"
         app:layout_constraintStart_toEndOf="@+id/hike_detail_ok" />
 
     <Button
@@ -115,5 +118,16 @@
         android:text="2 persons"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/hike_name_detail" />
+
+    <Button
+        android:id="@+id/shopping_btn"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="16dp"
+        android:layout_marginBottom="16dp"
+        android:onClick="onShoppingClick"
+        android:text="Shopping"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent" />
 
 </android.support.constraint.ConstraintLayout>

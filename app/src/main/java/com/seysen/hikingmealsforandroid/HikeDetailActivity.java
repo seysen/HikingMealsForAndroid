@@ -35,6 +35,7 @@ public class HikeDetailActivity extends AppCompatActivity implements Datable, Se
     public static final int REQUEST_EDIT_TYPE=2;
     private static final String HIKENAME = "hike";
     public static final String HIKEDAYNAME = "day";
+    private static final int REQUEST_SHOPPING = 3;
     private int position;
     private HikeDayAdapter adapter;
     private Hike hike;
@@ -98,18 +99,13 @@ public class HikeDetailActivity extends AppCompatActivity implements Datable, Se
     protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
         if (resultCode==RESULT_OK) {
-            switch (requestCode) {
-                case REQUEST_CREATE_TYPE: {
-
-                }
-                case REQUEST_EDIT_TYPE: {
-                    assert data != null;
-                    int position = data.getIntExtra(ID_KEY,0);
-                    HikeDay day = data.getParcelableExtra(HIKEDAYNAME);
-                    hikeDaysList.set(position,day);
-                    hike.setHikeDays(hikeDaysList);
-                    updateHike();
-                }
+            if (requestCode == REQUEST_EDIT_TYPE) {
+                assert data != null;
+                int position = data.getIntExtra(ID_KEY, 0);
+                HikeDay day = data.getParcelableExtra(HIKEDAYNAME);
+                hikeDaysList.set(position, day);
+                hike.setHikeDays(hikeDaysList);
+                updateHike();
             }
             adapter.notifyDataSetChanged();
         }
@@ -129,6 +125,13 @@ public class HikeDetailActivity extends AppCompatActivity implements Datable, Se
         hike.remove();
         setResult(RESULT_CANCELED);
         finish();
+    }
+
+    public void onShoppingClick (View view) {
+        //hike.generateShoppingList();
+        Intent intent = new Intent(view.getContext(),ShoppingListActivity.class);
+        intent.putExtra(HIKENAME,hike);
+        startActivityForResult(intent,REQUEST_SHOPPING);
     }
 
     public void onDayClick (View view) {

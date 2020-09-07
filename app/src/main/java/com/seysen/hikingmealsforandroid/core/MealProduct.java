@@ -2,6 +2,7 @@ package com.seysen.hikingmealsforandroid.core;
 
 import android.os.Parcel;
 import android.os.Parcelable;
+import android.support.annotation.Nullable;
 import android.util.Log;
 
 public class MealProduct implements Parcelable {
@@ -101,5 +102,14 @@ public class MealProduct implements Parcelable {
 
     public int getProductID() {
         return this.product.getProductID();
+    }
+
+    @Override
+    public boolean equals(@Nullable Object obj) {
+        if (obj instanceof MealProduct) {
+            return this.getProduct().getProductID() == ((MealProduct) obj).getProduct().getProductID();
+        } else {
+            return false;
+        }
     }
 }

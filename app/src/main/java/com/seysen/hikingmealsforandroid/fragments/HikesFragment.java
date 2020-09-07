@@ -59,7 +59,8 @@ public class HikesFragment extends Fragment implements Datable {
                 Log.d(TAG, "onItemClick position: " + position);
                 Intent intent = new Intent(v.getContext(), HikeDetailActivity.class);
                 intent.putExtra(ID_KEY, position);
-                intent.putExtra(HIKENAME, mHikes.get(position));
+                Hike hike = mHikes.get(position);
+                intent.putExtra(HIKENAME, hike);
                 //Log.d(TAG, "Extras = " + String.valueOf(intent.getExtras()));
                 startActivityForResult(intent, REQUEST_EDIT_TYPE);
             }
