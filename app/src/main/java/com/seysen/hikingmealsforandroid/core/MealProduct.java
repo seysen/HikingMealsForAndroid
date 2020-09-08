@@ -82,7 +82,7 @@ public class MealProduct implements Parcelable {
         this.weight = weight;
     }
 
-    private void update() {
+    public void update() {
         this.energy = product.getEnergy()*weight/100;
         this.protein = product.getProtein()*weight/100;
         this.fat = product.getFat()*weight/100;

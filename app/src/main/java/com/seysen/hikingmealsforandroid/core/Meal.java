@@ -238,6 +238,7 @@ public class Meal implements Parcelable {
         this.carbohydrate = 0;
         this.weight = 0;
         for (MealProduct product: mealProducts) {
+            product.update();
             this.energy += product.getEnergy();
             this.protein += product.getProtein();
             this.fat += product.getFat();
