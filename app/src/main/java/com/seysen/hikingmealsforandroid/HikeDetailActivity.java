@@ -191,4 +191,10 @@ public class HikeDetailActivity extends AppCompatActivity implements Datable, Se
         }
         updateHike();
     }
+
+    @Override
+    public void onBackPressed() {
+        setResult(RESULT_CANCELED);
+        finish();
+    }
 }

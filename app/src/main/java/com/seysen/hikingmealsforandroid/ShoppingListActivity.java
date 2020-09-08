@@ -57,4 +57,10 @@ public class ShoppingListActivity extends AppCompatActivity {
         setResult(RESULT_OK,data);
         finish();
     }
+
+    @Override
+    public void onBackPressed() {
+        setResult(RESULT_CANCELED);
+        finish();
+    }
 }

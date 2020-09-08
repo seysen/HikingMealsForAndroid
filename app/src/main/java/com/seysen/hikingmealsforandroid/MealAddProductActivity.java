@@ -92,4 +92,10 @@ public class MealAddProductActivity extends AppCompatActivity {
         setResult(RESULT_CANCELED);
         finish();
     }
+
+    @Override
+    public void onBackPressed() {
+        setResult(RESULT_CANCELED);
+        finish();
+    }
 }

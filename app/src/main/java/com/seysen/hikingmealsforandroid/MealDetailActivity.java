@@ -201,4 +201,10 @@ public class MealDetailActivity extends AppCompatActivity implements Datable {
         adapter.notifyDataSetChanged();
         updateMeal();
     }
+
+    @Override
+    public void onBackPressed() {
+        setResult(RESULT_CANCELED);
+        finish();
+    }
 }

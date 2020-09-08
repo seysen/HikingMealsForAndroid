@@ -125,4 +125,10 @@ public class DayDetailActivity extends AppCompatActivity implements Datable, Add
         adapter.notifyItemInserted(meals.size()-1);
         updateHikeDay();
     }
+
+    @Override
+    public void onBackPressed() {
+        setResult(RESULT_CANCELED);
+        finish();
+    }
 }

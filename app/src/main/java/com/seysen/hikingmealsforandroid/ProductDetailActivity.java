@@ -85,4 +85,10 @@ public class ProductDetailActivity extends AppCompatActivity {
         setResult(RESULT_CANCELED);
         finish();
     }
+
+    @Override
+    public void onBackPressed() {
+        setResult(RESULT_CANCELED);
+        finish();
+    }
 }
