@@ -17,17 +17,35 @@ public class Hike implements Parcelable {
 
     static {
         Hike pvd2 = new Hike("pvd 2 days",2,2);
-        for (HikeDay hikeDay: pvd2.getHikeDays()) {
-            hikeDay.addMeal(Meal.getMeal("porridge"));
-            hikeDay.addMeal(Meal.getMeal("sandwich"));
-            hikeDay.addMeal(Meal.getMeal("pilaf"));
-        }
-        Hike pvd6 = new Hike("pvd 6 days",2,6);
-        for (HikeDay hikeDay: pvd6.getHikeDays()) {
-            hikeDay.addMeal(Meal.getMeal("porridge"));
-            hikeDay.addMeal(Meal.getMeal("sandwich"));
-            hikeDay.addMeal(Meal.getMeal("pilaf"));
-        }
+        pvd2.getHikeDay(0).addMeal(Meal.getMeal("sandwich with sausage"));
+        pvd2.getHikeDay(0).addMeal(Meal.getMeal("pilaf"));
+        pvd2.getHikeDay(0).addMeal(Meal.getMeal("tea with cookie"));
+        pvd2.getHikeDay(1).addMeal(Meal.getMeal("porridge"));
+        pvd2.getHikeDay(1).addMeal(Meal.getMeal("tea with cookie"));
+        pvd2.getHikeDay(1).addMeal(Meal.getMeal("sandwich with cheese"));
+        Hike pvd6 = new Hike("pvd 6 days",5,6);
+        pvd6.getHikeDay(0).addMeal(Meal.getMeal("sandwich with sausage"));
+        pvd6.getHikeDay(0).addMeal(Meal.getMeal("pilaf"));
+        pvd6.getHikeDay(0).addMeal(Meal.getMeal("tea with cookie"));
+        pvd6.getHikeDay(1).addMeal(Meal.getMeal("pasta with cheese"));
+        pvd6.getHikeDay(1).addMeal(Meal.getMeal("sandwich with cheese"));
+        pvd6.getHikeDay(1).addMeal(Meal.getMeal("buckwheat with beef"));
+        pvd6.getHikeDay(1).addMeal(Meal.getMeal("tea with cookie"));
+        pvd6.getHikeDay(2).addMeal(Meal.getMeal("porridge"));
+        pvd6.getHikeDay(2).addMeal(Meal.getMeal("sandwich with pate"));
+        pvd6.getHikeDay(2).addMeal(Meal.getMeal("mashed potatoes with meat"));
+        pvd6.getHikeDay(2).addMeal(Meal.getMeal("tea with cookie"));
+        pvd6.getHikeDay(3).addMeal(Meal.getMeal("pasta with cheese"));
+        pvd6.getHikeDay(3).addMeal(Meal.getMeal("sandwich with sausage"));
+        pvd6.getHikeDay(3).addMeal(Meal.getMeal("lentils with meat"));
+        pvd6.getHikeDay(3).addMeal(Meal.getMeal("tea with cookie"));
+        pvd6.getHikeDay(4).addMeal(Meal.getMeal("porridge"));
+        pvd6.getHikeDay(4).addMeal(Meal.getMeal("sandwich with cheese"));
+        pvd6.getHikeDay(4).addMeal(Meal.getMeal("pasta with beef"));
+        pvd6.getHikeDay(4).addMeal(Meal.getMeal("tea with cookie"));
+        pvd6.getHikeDay(5).addMeal(Meal.getMeal("porridge"));
+        pvd6.getHikeDay(5).addMeal(Meal.getMeal("sandwich with pate"));
+        pvd6.getHikeDay(5).addMeal(Meal.getMeal("tea with cookie"));
     }
 
     protected Hike(Parcel in) {

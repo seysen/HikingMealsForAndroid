@@ -19,27 +19,34 @@ public class Product implements Parcelable {
     private double carbohydrate;//carbohydrate per 100 grams
 
     static {
-        Product pasta = new Product("pasta",350,13,1.5,72);
-        Product rice = new Product("rice",374,7.51,1.03,80.89);
-        Product buckwheat = new Product("buckwheat",340,10.9,2.7,71.3);
-        Product lentils = new Product("lentils",352,24.63,1.06,63.35);
-        Product cereals = new Product("cereals",414,3.45,3.45,89.66);
-        Product ketchup = new Product("ketchup",93,1.8,1,22.2);
-        Product mayonnaise = new Product("mayonnaise",624,3.1,67,2.6);
-        Product jam = new Product("jam",226,0,0,56.5);
-        Product beef = new Product("beef",232,16.8,18.4,0);
-        Product milk = new Product("milk",362,33.2,1,52.6);
-        Product onion = new Product("onion",47,1.4,0,10.4);
-        Product carrot = new Product("carrot",32,1.3,0.1,6.9);
-        Product garlic = new Product("garlic",134,6.5,0.5,29.9);
-        Product oil = new Product("oil",899,0,99,0);
-        Product cheese = new Product("cheese",330,24,26,0);
-        Product chicken = new Product("chicken",110,23.1,1.2,0);
-        Product candy = new Product("candy", 377,0,0.1,97.5);
-        Product nut = new Product("nut", 653,13,62.6,9.3);
-        Product driedFruits = new Product("driedFruits",215,5.2,0.3,51);
-        Product bread = new Product("bread",264,7.5,2.9,50.9);
-        Product sausage = new Product("sausage",461,24,40.5,0);
+        new Product("pasta",350,13,1.5,72);
+        new Product("rice",374,7.51,1.03,80.89);
+        new Product("buckwheat",340,10.9,2.7,71.3);
+        new Product("lentils",352,24.63,1.06,63.35);
+        new Product("cereals",414,3.45,3.45,89.66);
+        new Product("ketchup",93,1.8,1,22.2);
+        new Product("mayonnaise",624,3.1,67,2.6);
+        new Product("jam",226,0,0,56.5);
+        new Product("beef",232,16.8,18.4,0);
+        new Product("milk",362,33.2,1,52.6);
+        new Product("onion",47,1.4,0,10.4);
+        new Product("carrot",32,1.3,0.1,6.9);
+        new Product("garlic",134,6.5,0.5,29.9);
+        new Product("oil",899,0,99,0);
+        new Product("cheese",330,24,26,0);
+        new Product("chicken",110,23.1,1.2,0);
+        new Product("candy", 377,0,0.1,97.5);
+        new Product("nut", 653,13,62.6,9.3);
+        new Product("dried fruits",215,5.2,0.3,51);
+        new Product("bread",264,7.5,2.9,50.9);
+        new Product("crispbread",242,8.2,2.6,46.3);
+        new Product("sausage",461,24,40.5,0);
+        new Product("potato flakes",369,7,1,83);
+        new Product("pate",301,11.6,28.1,3.4);
+        new Product("tea",140.9,20,5.1,4);
+        new Product("sugar",399,0,0,99.8);
+        new Product("condensed milk",328,7.2,8.5,55.5);
+        new Product("cookie",460,7,18,66);
     }
     //Constructor
 
