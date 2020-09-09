@@ -50,11 +50,12 @@
 
     <TextView
         android:id="@+id/textView19"
-        android:layout_width="wrap_content"
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginStart="8dp"
         android:text="gramms / per person"
         app:layout_constraintBaseline_toBaselineOf="@+id/person_meal_weight"
+        app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toEndOf="@+id/person_meal_weight" />
 
     <EditText
